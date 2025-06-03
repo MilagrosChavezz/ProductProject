@@ -1,0 +1,45 @@
+.products-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+  justify-content: center;
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+app-product-card {
+  flex: 1 1 280px; 
+  max-width: 320px;
+  box-sizing: border-box;
+}
+
+  .products-list {
+    padding: 1rem 0.5rem;
+  }
+  app-product-card {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+
+@media (min-width: 601px) and (max-width: 900px) {
+  app-product-card {
+    flex: 1 1 45%;
+    max-width: 45%;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1200px) {
+  app-product-card {
+    flex: 1 1 30%;
+    max-width: 30%;
+  }
+}
+
+@media (min-width: 1201px) {
+  app-product-card {
+    flex: 1 1 22%;
+    max-width: 22%;
+  }
+}

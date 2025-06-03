@@ -1,0 +1,32 @@
+<nav class="navbar" role="navigation" aria-label="Main Navigation">
+
+  <div class="left-section">
+    <div 
+      class="hamburger"
+      (click)="toggleMenu()"
+      tabindex="0"
+      role="button"
+      aria-label="Toggle menu"
+      [attr.aria-expanded]="menuOpen"
+      (keydown.enter)="toggleMenu()"
+      (keydown.space)="toggleMenu()"
+    >☰</div>
+    <ul class="dropdown-menu" [class.open]="menuOpen" role="menu" [attr.aria-hidden]="!menuOpen">
+      <li><a routerLink="/" role="menuitem" tabindex="0">Home</a></li>
+      <li><a routerLink="/" role="menuitem" tabindex="0">Profile</a></li>
+    </ul>
+  </div>
+
+
+  <div class="logo">
+    <a routerLink="/" tabindex="0">ShopZone</a>
+  </div>
+
+  <div class="auth-buttons">
+    <a routerLink="/signin" class="btn login" tabindex="0">Login</a>
+    <a routerLink="/signup" class="btn signup" tabindex="0">Signup</a>
+    <a routerLink="/order" class="cart-link" aria-label="Shopping Cart" tabindex="0">
+      <img src="/shopping-cart.png" alt="Shopping Cart" class="cart-icon" />
+    </a>
+  </div>
+</nav>

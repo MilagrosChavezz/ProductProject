@@ -1,0 +1,5 @@
+<div class="products-list" role="list" aria-label="Product listing">
+  @for(item of products(); track item.id){
+  <app-product-card [product]="item" role="listitem"></app-product-card>
+  }
+</div>
