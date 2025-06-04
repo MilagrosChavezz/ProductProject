@@ -1,9 +1,11 @@
 const db = require('../models');
-const User = db.users;
+const User = db.User;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
-const SECRET_KEY = 'tu_clave_secreta'; 
+const SECRET_KEY = process.env.SECRET_KEY;
+
 
 exports.signUp = async (req, res) => {
   try {
@@ -62,6 +64,7 @@ exports.logIn = async (req, res) => {
       }
     });
   } catch (error) {
+      console.error('Error en logIn:', error);
     res.status(500).json({ message: 'Error al iniciar sesión', error });
   }
 };

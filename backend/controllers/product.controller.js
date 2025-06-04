@@ -1,5 +1,6 @@
 const db = require('../models');
-const Product = db.products;
+const Product = db.Product;
+
 
 exports.addProduct = async (req, res) => {
   try {
@@ -28,7 +29,7 @@ exports.listProducts = async (req, res) => {
     const products = await Product.findAll();
     res.status(200).json(products);
   } catch (error) {
-    res.status(500).json({ message: 'Error al obtener los productos', error });
+    res.status(500).json({ message: 'Error al obtener los productos', error: error.message });
   }
 };
 
