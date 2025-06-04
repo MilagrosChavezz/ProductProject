@@ -20,11 +20,20 @@ CREATE TABLE products (
   category VARCHAR(50)
 );
 
+
 CREATE TABLE orders (
   id INT AUTO_INCREMENT PRIMARY KEY,
   userId INT,
+  totalPrice FLOAT,
   productId INT,
-  quantity INT DEFAULT 1,
   FOREIGN KEY (userId) REFERENCES users(id),
+  FOREIGN KEY (productId) REFERENCES products(id)
+);
+
+CREATE TABLE product_order (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  productId INT,
+  orderId INT,
+  FOREIGN KEY (orderId) REFERENCES orders(id),
   FOREIGN KEY (productId) REFERENCES products(id)
 );
