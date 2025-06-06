@@ -1,13 +1,23 @@
 import { Component, OnInit, Renderer2, ElementRef } from '@angular/core';
+import { UserService } from '../services/auth.service';
+import { Form, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { UserLogin } from '../../../models/userLogin.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
+  imports:[ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private renderer: Renderer2, private el: ElementRef) {}
+  constructor(private renderer: Renderer2, private el: ElementRef,private loginService:UserService,private router:Router) {}
+
+  loginForm:FormGroup = new FormGroup({
+    email: new FormControl(''),
+    password: new FormControl('')
+  });
 
   ngOnInit(): void {
     const emojiContainer = this.renderer.createElement('div');
@@ -50,5 +60,27 @@ export class LoginComponent implements OnInit {
     };
 
     setInterval(createIcon, 500);
+  }
+
+
+  OnSubmit() {
+   
+    const userLogin: UserLogin = {
+      email: this.loginForm.value.email,
+      password: this.loginForm.value.password
+    };
+    
+    this.loginService.login(userLogin).subscribe({
+      next: (response) => {
+        
+      this.loginService.setLoginStatus(response.token || '');
+      this.router.navigate(['/products']);
+      },
+      error: (error) => {
+        console.error('Login failed', error);
+       
+        
+      }
+    });
   }
 }

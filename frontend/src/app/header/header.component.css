@@ -165,7 +165,16 @@
     transform: scale(1.15);
     outline: none;
   }
-
+.logout{
+     background-color: #af1b1b;
+    color: white;
+   
+  }
+  .logout:hover{
+     background-color: #740505;
+    color: rgb(255, 255, 255);
+   
+  }
  
   @media (max-width: 600px) {
     nav.navbar {
