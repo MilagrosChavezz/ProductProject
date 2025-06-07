@@ -7,39 +7,35 @@
 
   <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center position-relative" style="z-index: 1;">
     <div class="card shadow-lg p-5 rounded-4" style="max-width: 520px; width: 100%; min-height: 580px;">
-      <h2 class="text-center text-primary fw-bold mb-4">Login</h2>
-      <form [formGroup]="loginForm" (ngSubmit)="OnSubmit()" novalidate>
+      <h2 class="text-center text-primary fw-bold mb-4">Iniciar Sesión</h2>
+      <form action="/login" method="POST" novalidate>
         <div class="mb-4">
-          <label for="email" class="form-label fw-semibold">Email</label>
+          <label for="email" class="form-label fw-semibold">Correo Electrónico</label>
           <input
             type="email"
             class="form-control form-control-lg rounded-3"
             id="email"
             name="email"
-            placeholder="email@example.com"
-            formControlName="email"
+            placeholder="correo@ejemplo.com"
             required
           />
         </div>
         <div class="mb-4">
-          <label for="password" class="form-label fw-semibold">Password</label>
+          <label for="password" class="form-label fw-semibold">Contraseña</label>
           <input
             type="password"
             class="form-control form-control-lg rounded-3"
             id="password"
             name="password"
-            placeholder="password"
-            formControlName="password"
+            placeholder="Tu contraseña"
             required
             minlength="6"
           />
         </div>
 
         <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold custom-btn mt-5">
-          Login
+          Ingresar
         </button>
       </form>
     </div>
   </div>
-
- 

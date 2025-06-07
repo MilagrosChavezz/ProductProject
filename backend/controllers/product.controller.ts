@@ -1,13 +1,15 @@
-const db = require('../models');
+import { Request, Response } from 'express';
+import db from '../models';
+
 const Product = db.Product;
 
-
-exports.addProduct = async (req, res) => {
+export const addProduct = async (req: Request, res: Response): Promise<void> => {
   try {
     const { name, description, price, imageUrl, category } = req.body;
 
     if (!name || !price) {
-      return res.status(400).json({ message: 'El nombre y el precio son obligatorios' });
+      res.status(400).json({ message: 'El nombre y el precio son obligatorios' });
+      return;
     }
 
     const newProduct = await Product.create({
@@ -15,7 +17,7 @@ exports.addProduct = async (req, res) => {
       description,
       price,
       imageUrl,
-      category
+      category,
     });
 
     res.status(201).json({ message: 'Producto creado con éxito', product: newProduct });
@@ -24,20 +26,19 @@ exports.addProduct = async (req, res) => {
   }
 };
 
-exports.listProducts = async (req, res) => {
+const listProducts = async (req: Request, res: Response) => {
   try {
     const products = await Product.findAll();
     res.status(200).json(products);
   } catch (error) {
-    res.status(500).json({ message: 'Error al obtener los productos', error: error.message });
+    res.status(500).json({ message: 'Error al obtener los productos', error });
   }
 };
 
-exports.getProductDetails = async (req, res) => {
+const getProductDetails = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const product = await Product.findByPk(id);
-
     if (!product) {
       return res.status(404).json({ message: 'Producto no encontrado' });
     }
@@ -47,3 +48,5 @@ exports.getProductDetails = async (req, res) => {
     res.status(500).json({ message: 'Error al obtener detalles del producto', error });
   }
 };
+
+export default { addProduct, listProducts, getProductDetails };

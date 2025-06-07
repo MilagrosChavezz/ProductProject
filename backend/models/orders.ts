@@ -1,0 +1,76 @@
+import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
+
+interface OrderAttributes {
+  id: number;
+  userId?: number;
+  totalPrice?: number;
+  productId?: number;
+}
+
+type OrderCreationAttributes = Optional<OrderAttributes, 'id'>;
+
+export default module.exports = (sequelize: Sequelize)=> {
+  class Order extends Model<OrderAttributes, OrderCreationAttributes>
+    implements OrderAttributes {
+    public id!: number;
+    public userId?: number;
+    public totalPrice?: number;
+    public productId?: number;
+  }
+
+  Order.init(
+    {
+      id: {
+        autoIncrement: true,
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'users',
+          key: 'id',
+        },
+      },
+      totalPrice: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
+      },
+      productId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'products',
+          key: 'id',
+        },
+      },
+    },
+    {
+      sequelize,
+      tableName: 'orders',
+      timestamps: false,
+      indexes: [
+        {
+          name: 'PRIMARY',
+          unique: true,
+          using: 'BTREE',
+          fields: [{ name: 'id' }],
+        },
+        {
+          name: 'userId',
+          using: 'BTREE',
+          fields: [{ name: 'userId' }],
+        },
+        {
+          name: 'productId',
+          using: 'BTREE',
+          fields: [{ name: 'productId' }],
+        },
+      ],
+    }
+  );
+
+  return Order;
+};

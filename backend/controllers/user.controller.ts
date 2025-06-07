@@ -1,13 +1,15 @@
-const db = require('../models');
+import { Request, Response } from 'express';
+import db from '../models';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const SECRET_KEY = process.env.SECRET_KEY as string;
 const User = db.User;
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
 
-const SECRET_KEY = process.env.SECRET_KEY;
-
-
-exports.signUp = async (req, res) => {
+const signUp = async (req: Request, res: Response) => {
   try {
     const { email, password, firstName, lastName, address } = req.body;
 
@@ -36,7 +38,7 @@ exports.signUp = async (req, res) => {
   }
 };
 
-exports.logIn = async (req, res) => {
+const logIn = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
@@ -64,18 +66,18 @@ exports.logIn = async (req, res) => {
       }
     });
   } catch (error) {
-      console.error('Error en logIn:', error);
+    console.error('Error en logIn:', error);
     res.status(500).json({ message: 'Error al iniciar sesión', error });
   }
 };
 
-exports.getProfile = async (req, res) => {
+const getProfile = async (req: Request, res: Response) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader) return res.status(401).json({ message: 'Token no proporcionado' });
 
     const token = authHeader.split(' ')[1];
-    const decoded = jwt.verify(token, SECRET_KEY);
+    const decoded = jwt.verify(token, SECRET_KEY) as { id: number };
 
     const user = await User.findByPk(decoded.id, {
       attributes: ['id', 'email', 'firstName', 'lastName', 'address']
@@ -88,3 +90,5 @@ exports.getProfile = async (req, res) => {
     res.status(401).json({ message: 'Token inválido o expirado', error });
   }
 };
+
+export default { signUp, logIn, getProfile };

@@ -1,7 +1,9 @@
-const db = require('../models');
+import { Request, Response } from 'express';
+import db from '../models';
+
 const Order = db.orders;
 
-exports.getAllOrders = async (req, res) => {
+const getAllOrders = async (req: Request, res: Response) => {
   try {
     const orders = await Order.findAll();
     res.status(200).json(orders);
@@ -10,7 +12,7 @@ exports.getAllOrders = async (req, res) => {
   }
 };
 
-exports.createOrder = async (req, res) => {
+const createOrder = async (req: Request, res: Response) => {
   try {
     const { userId, totalPrice, productId } = req.body;
     const newOrder = await Order.create({ userId, totalPrice, productId });
@@ -20,7 +22,7 @@ exports.createOrder = async (req, res) => {
   }
 };
 
-exports.getOrdersByUserId = async (req, res) => {
+const getOrdersByUserId = async (req: Request, res: Response) => {
   const { userId } = req.params;
   try {
     const orders = await Order.findAll({ where: { userId } });
@@ -30,7 +32,7 @@ exports.getOrdersByUserId = async (req, res) => {
   }
 };
 
-exports.deleteOrder = async (req, res) => {
+const deleteOrder = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const deleted = await Order.destroy({ where: { id } });
@@ -43,3 +45,5 @@ exports.deleteOrder = async (req, res) => {
     res.status(500).json({ message: 'Error al eliminar la orden', error });
   }
 };
+
+export default { getAllOrders, createOrder, getOrdersByUserId, deleteOrder };
