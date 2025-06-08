@@ -1,11 +1,10 @@
+// main file (ej: index.ts o server.ts)
 import express, { Application } from 'express';
 import cors from 'cors';
-
 
 import userRoutes from './routes/user.routes';
 import productRoutes from './routes/product.routes';
 import orderRoutes from './routes/order.routes';
-
 
 import db from './models';
 

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import db from '../models';
+import { ProductService } from '../service/product.service';
 
-const Product = db.Product;
+const productService = new ProductService();
 
 export const addProduct = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -12,7 +12,7 @@ export const addProduct = async (req: Request, res: Response): Promise<void> => 
       return;
     }
 
-    const newProduct = await Product.create({
+    const newProduct = await productService.createProduct({
       name,
       description,
       price,
@@ -26,21 +26,21 @@ export const addProduct = async (req: Request, res: Response): Promise<void> => 
   }
 };
 
-const listProducts = async (req: Request, res: Response) => {
+export const listProducts = async (req: Request, res: Response) => {
   try {
-    const products = await Product.findAll();
+    const products = await productService.getAllProducts();
     res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ message: 'Error al obtener los productos', error });
   }
 };
 
-const getProductDetails = async (req: Request, res: Response) => {
+export const getProductDetails = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
-    const product = await Product.findByPk(id);
+    const product = await productService.getProductDetails(id);
     if (!product) {
-      return res.status(404).json({ message: 'Producto no encontrado' });
+      return void res.status(404).json({ message: 'Producto no encontrado' });
     }
 
     res.status(200).json(product);
