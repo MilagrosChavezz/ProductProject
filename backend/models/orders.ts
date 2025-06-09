@@ -1,23 +1,22 @@
 import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
 
-interface OrderAttributes {
+export interface OrderAttributes {
   id: number;
   userId?: number;
   totalPrice?: number;
   productId?: number;
 }
 
-type OrderCreationAttributes = Optional<OrderAttributes, 'id'>;
+export type OrderCreationAttributes = Optional<OrderAttributes, 'id'>;
 
-export default module.exports = (sequelize: Sequelize)=> {
-  class Order extends Model<OrderAttributes, OrderCreationAttributes>
-    implements OrderAttributes {
-    public id!: number;
-    public userId?: number;
-    public totalPrice?: number;
-    public productId?: number;
-  }
+export class Order extends Model<OrderAttributes, OrderCreationAttributes> implements OrderAttributes {
+  public id!: number;
+  public userId?: number;
+  public totalPrice?: number;
+  public productId?: number;
+}
 
+export default (sequelize: Sequelize) => {
   Order.init(
     {
       id: {
