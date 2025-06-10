@@ -31,7 +31,8 @@ export const listProducts = async (req: Request, res: Response) => {
     const products = await productService.getAllProducts();
     res.status(200).json(products);
   } catch (error) {
-    res.status(500).json({ message: 'Error al obtener los productos', error });
+     console.error('Controller error in listProducts:', error);
+    res.status(500).json({ message: 'Error to get all products', error });
   }
 };
 

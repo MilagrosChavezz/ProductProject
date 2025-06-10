@@ -8,8 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { LoginComponent } from '../login/login.component';
-import { UserService } from '../services/auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -19,14 +18,14 @@ import { UserService } from '../services/auth.service';
 })
 export class HeaderComponent  {
 
-isLoggedIn = signal<boolean>(false); 
+  isLoggedIn = signal<boolean>(false); 
 
-  constructor(private authService: UserService) {
-   
+  constructor(private authService: AuthService) {
     effect(() => {
       this.isLoggedIn.set(this.authService.isLoggedIn())
     });
   }
+  
   menuOpen = false;
 
   logout() {
@@ -35,6 +34,7 @@ isLoggedIn = signal<boolean>(false);
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
   }
+  
 }
 
 

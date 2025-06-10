@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import orderController from '../controller/order.controller';
+import userController from '../controller/user.controller';
 
 const router: Router = Router();
 
-router.get('/', orderController.getAllOrders);
-router.post('/', orderController.createOrder);
-router.get('/user/:userId', orderController.getOrdersByUserId);
-router.delete('/:id', orderController.deleteOrder);
+
+router.post('/login', userController.logIn);
+router.post('/signup', userController.signUp);
+router.get('/:id', userController.getProfile);
 
 export default router;

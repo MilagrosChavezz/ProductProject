@@ -1,6 +1,7 @@
 
 
 
+
   nav.navbar {
     position: sticky;
     top: 0;
@@ -20,64 +21,17 @@
     display: flex;
     align-items: center;
     position: relative;
-  }
-
-  .hamburger {
-    font-size: 1.8rem;
     color: white;
-    cursor: pointer;
-    user-select: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
   }
-  .hamburger:hover,
-  .hamburger:focus {
-    background-color: rgba(255 255 255 / 0.2);
-    outline: none;
+  .link{
+  color: white;
+  }
+  .link:hover{
+    color: #fbbc04;
   }
 
 
-  ul.dropdown-menu {
-    position: absolute;
-    top: 55px;
-    left: 0;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgb(0 0 0 / 0.15);
-    list-style: none;
-    width: 160px;
-    overflow: hidden;
-    max-height: 0;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-10px);
-    transition:
-      max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-      opacity 0.35s ease,
-      transform 0.35s ease;
-  }
 
-  ul.dropdown-menu.open {
-    max-height: 500px; 
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-  }
-  ul.dropdown-menu li a {
-    display: block;
-    padding: 12px 18px;
-    color: #333;
-    text-decoration: none;
-    font-weight: 600;
-    transition: background-color 0.25s ease, color 0.25s ease;
-  }
-  ul.dropdown-menu li a:hover,
-  ul.dropdown-menu li a:focus {
-    background: #1a73e8;
-    color: white;
-    outline: none;
-  }
 
 
   .logo a {

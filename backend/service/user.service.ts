@@ -2,41 +2,34 @@ import db from '../models';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { LogInData } from '../Request/loginData';
+import { SignUpData } from '../Request/signUpData';
+
 
 dotenv.config();
 
 const SECRET_KEY = process.env.SECRET_KEY as string;
 const User = db.User;
 
-export interface SignUpData {
-  email: string;
-  password: string;
-  firstName?: string;
-  lastName?: string;
-  address?: string;
-}
-
-export interface LogInData {
-  email: string;
-  password: string;
-}
 
 export class UserService {
-  /**
-   * Registra un nuevo usuario.
-   * Lanza un error si el email ya existe.
-   */
+
+
+  findUserByEmail(email: any) {
+    return User.findOne({ where: { email } });
+  }
+ 
   async signUp(data: SignUpData) {
-    // Verifica si el usuario ya existe
+   
     const existingUser = await User.findOne({ where: { email: data.email } });
     if (existingUser) {
       throw new Error('El correo ya está registrado');
     }
 
-    // Hashea la contraseña
+    
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
-    // Crea el usuario en la base de datos
+
     const newUser = await User.create({
       email: data.email,
       password: hashedPassword,
@@ -48,33 +41,38 @@ export class UserService {
     return newUser;
   }
 
-  /**
-   * Realiza el inicio de sesión.
-   * Verifica el email y la contraseña; si todo es correcto, retorna un token y los datos del usuario.
-   */
+  
   async logIn(data: LogInData) {
-    // Busca el usuario por email
-    const user = await User.findOne({ where: { email: data.email } });
-    if (!user) {
-      throw new Error('Usuario no encontrado');
-    }
+  const user = await User.findOne({ where: { email: data.email } });
 
-    // Compara la contraseña ingresada con la almacenada (hasheada)
-    const isMatch = await bcrypt.compare(data.password, user.password);
-    if (!isMatch) {
-      throw new Error('Contraseña incorrecta');
-    }
-
-    // Genera un token JWT
-    const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '2h' });
-    return { token, user };
+  if (!user) {
+    const error: any = new Error('User not found');
+    error.status = 401;
+    throw error;
   }
 
-  /**
-   * Obtiene el perfil de un usuario dado su ID.
-   */
+  const isMatch = await bcrypt.compare(data.password, user.password);
+  if (!isMatch) {
+    const error: any = new Error('Invalid password');
+    error.status = 401;
+    throw error;
+  }
+
+  const token = jwt.sign(
+    { id: user.id, email: user.email },
+    SECRET_KEY,
+    { expiresIn: '2h' }
+  );
+
+  return { token, user };
+}
+
+
+  
+
+
   async getProfile(userId: number) {
-    // Busca el usuario por PK y filtra atributos sensibles
+   
     const user = await User.findByPk(userId, {
       attributes: ['id', 'email', 'firstName', 'lastName', 'address'],
     });

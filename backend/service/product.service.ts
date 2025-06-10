@@ -1,15 +1,16 @@
 
-import Product from '../models'; // Asegúrate que tu modelo esté exportado individualmente
-import { ProductInput } from '../types/productInput'; // Tipos separados para mantener orden
+import db from '../models'; 
+import { ProductInput } from '../Request/productInput'; 
 
 export class ProductService {
-  private model = Product;
+  private model = db.Product;
 
   async getAllProducts() {
     try {
       return await this.model.findAll();
     } catch (error) {
-      throw new Error('Error al obtener los productos');
+       console.error('❌ Sequelize error:', error);
+    throw error;
     }
   }
 
@@ -29,3 +30,4 @@ export class ProductService {
     }
   }
 }
+export default new ProductService();

@@ -1,4 +1,4 @@
-// main file (ej: index.ts o server.ts)
+
 import express, { Application } from 'express';
 import cors from 'cors';
 

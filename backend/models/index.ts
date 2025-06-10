@@ -1,4 +1,4 @@
-import { Sequelize, DataTypes } from 'sequelize';
+import { Sequelize } from 'sequelize';
 import sequelize from '../config/db';
 import ProductModel from './products';
 import OrderModel from './orders';
@@ -10,13 +10,13 @@ const db: any = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-// Inicialización de modelos
+
 db.Product = ProductModel(sequelize);
 db.Order = OrderModel(sequelize);
 db.User = UserModel(sequelize);
 db.ProductOrder = ProductOrderModel(sequelize);
 
-// Relaciones
+
 db.Product.belongsToMany(db.Order, {
   through: db.ProductOrder,
   foreignKey: 'productId',
