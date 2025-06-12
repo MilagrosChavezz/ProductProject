@@ -1,16 +1,29 @@
-  <article class="product-card" tabindex="0" role="region" aria-label="Product card for Organic Green Tea">
-    <img 
-      class="product-image" 
-      src=  {{product()?.imageUrl}} 
-      alt="Organic Green Tea packaging with leaves" 
-      loading="lazy"
-    />
-    <div class="product-content">
-      <h2 class="product-title">{{product()?.name}}</h2>
-      <p class="product-description">
-       {{product()?.description}}
-      </p>
-      <div class="product-price">$  {{product()?.price}}</div>
-      <a href="#" class="btn-buy" role="button" tabindex="0">Add to Cart</a>
-    </div>
-  </article>
+<article
+  class="product-card"
+  tabindex="0"
+  role="region"
+  aria-label="Product card for Organic Green Tea"
+>
+  <img
+    class="product-image"
+    src="{{ product()?.imageUrl }}"
+    alt="Organic Green Tea packaging with leaves"
+    loading="lazy"
+  />
+  <div class="product-content">
+    <h2 class="product-title">{{ product()?.name }}</h2>
+    <p class="product-description">
+      {{ product()?.description }}
+    </p>
+    <div class="product-price">$ {{ product()?.price }}</div>
+    <a
+      [routerLink]="['/products', product()?.id]"
+      routerLinkActive="router-link-active"
+      class="btn-buy"
+      role="button"
+      tabindex="0"
+    >
+      View Product
+    </a>
+  </div>
+</article>

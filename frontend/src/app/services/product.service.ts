@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { Product } from '../products/products.component';
+import { Product } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
+
 
   url = environment.apiUrl + '/products';
   
@@ -16,4 +17,10 @@ export class ProductService {
   getProducts() {
     return this.http.get<Product[]>(this.url);
   }
+
+  getProductById(id: number) {
+    return this.http.get<Product>(`${this.url}/${id}`);
+  }
+
+  
 }

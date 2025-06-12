@@ -1,10 +1,9 @@
 import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
-
 export interface OrderAttributes {
   id: number;
   userId?: number;
   totalPrice?: number;
-  productId?: number;
+  status?: string;  
 }
 
 export type OrderCreationAttributes = Optional<OrderAttributes, 'id'>;
@@ -13,7 +12,7 @@ export class Order extends Model<OrderAttributes, OrderCreationAttributes> imple
   public id!: number;
   public userId?: number;
   public totalPrice?: number;
-  public productId?: number;
+  public status?: string;  
 }
 
 export default (sequelize: Sequelize) => {
@@ -37,13 +36,10 @@ export default (sequelize: Sequelize) => {
         type: DataTypes.FLOAT,
         allowNull: true,
       },
-      productId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'products',
-          key: 'id',
-        },
+      status: {   
+        type: DataTypes.STRING(20),
+        allowNull: false,
+        defaultValue: 'open',
       },
     },
     {
@@ -61,11 +57,6 @@ export default (sequelize: Sequelize) => {
           name: 'userId',
           using: 'BTREE',
           fields: [{ name: 'userId' }],
-        },
-        {
-          name: 'productId',
-          using: 'BTREE',
-          fields: [{ name: 'productId' }],
         },
       ],
     }

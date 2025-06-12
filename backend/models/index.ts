@@ -20,8 +20,7 @@ db.ProductOrder = ProductOrderModel(sequelize);
 db.Product.belongsToMany(db.Order, {
   through: db.ProductOrder,
   foreignKey: 'productId',
-  otherKey: 'orderId',
-  as: 'orders',
+  otherKey: 'orderId'
 });
 
 db.Order.belongsToMany(db.Product, {

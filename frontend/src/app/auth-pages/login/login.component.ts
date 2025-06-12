@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import {  FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { UserLogin } from '../../../models/userLogin.model';
+import { UserLogin } from '../../models/userLogin.model';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 

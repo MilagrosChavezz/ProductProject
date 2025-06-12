@@ -2,7 +2,7 @@ import db from '../models';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import { LogInData } from '../Request/loginData';
+import { LogInData } from '../Request/logInData';
 import { SignUpData } from '../Request/signUpData';
 
 

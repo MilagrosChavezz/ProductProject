@@ -1,9 +1,11 @@
 
 import db from '../models'; 
-import { ProductInput } from '../Request/productInput'; 
+import { ProductData } from '../Request/productData'; 
 
 export class ProductService {
   private model = db.Product;
+  
+  
 
   async getAllProducts() {
     try {
@@ -14,7 +16,7 @@ export class ProductService {
     }
   }
 
-  async createProduct(data: ProductInput) {
+  async createProduct(data: ProductData) {
     try {
       return await this.model.create(data);
     } catch (error) {

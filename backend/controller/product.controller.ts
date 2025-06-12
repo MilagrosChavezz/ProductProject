@@ -36,6 +36,10 @@ export const listProducts = async (req: Request, res: Response) => {
   }
 };
 
+export const addProductToCart = async(req: Request, res: Response) => {
+    throw new Error('Function not implemented.');
+}
+
 export const getProductDetails = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
@@ -50,4 +54,6 @@ export const getProductDetails = async (req: Request, res: Response) => {
   }
 };
 
-export default { addProduct, listProducts, getProductDetails };
+export default { addProduct, listProducts, getProductDetails,addProductToCart };
+
+

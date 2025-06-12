@@ -1,13 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductService } from '../services/product.service';
-export interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  imageUrl: string;
-}
+import { Product } from '../models/product.model';
 @Component({
   selector: 'app-products',
   imports: [ProductCardComponent],

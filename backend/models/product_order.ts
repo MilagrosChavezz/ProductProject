@@ -2,18 +2,20 @@ import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
 
 interface ProductOrderAttributes {
   id: number;
-  productId?: number;
-  orderId?: number;
+  productId: number;  
+  orderId: number;    
+  quantity: number;   
 }
 
-type ProductOrderCreationAttributes = Optional<ProductOrderAttributes, 'id'>;
+type ProductOrderCreationAttributes = Optional<ProductOrderAttributes, 'id' | 'quantity'>;
 
-export default module.exports = (sequelize: Sequelize) => {
+export default (sequelize: Sequelize) => {
   class ProductOrder extends Model<ProductOrderAttributes, ProductOrderCreationAttributes>
     implements ProductOrderAttributes {
     public id!: number;
-    public productId?: number;
-    public orderId?: number;
+    public productId!: number;
+    public orderId!: number;
+    public quantity!: number;
   }
 
   ProductOrder.init(
@@ -26,7 +28,7 @@ export default module.exports = (sequelize: Sequelize) => {
       },
       productId: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false, 
         references: {
           model: 'products',
           key: 'id',
@@ -34,11 +36,16 @@ export default module.exports = (sequelize: Sequelize) => {
       },
       orderId: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false, 
         references: {
           model: 'orders',
           key: 'id',
         },
+      },
+      quantity: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 1,
       },
     },
     {
@@ -51,6 +58,12 @@ export default module.exports = (sequelize: Sequelize) => {
           unique: true,
           using: 'BTREE',
           fields: [{ name: 'id' }],
+        },
+        {
+          name: 'unique_order_product',
+          unique: true,
+          using: 'BTREE',
+          fields: [{ name: 'orderId' }, { name: 'productId' }],
         },
         {
           name: 'orderId',

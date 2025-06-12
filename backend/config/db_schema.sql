@@ -2,6 +2,8 @@ CREATE DATABASE shopzone_db;
 USE shopzone_db;
 
 
+select * from users;
+
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   email VARCHAR(100) UNIQUE NOT NULL,
@@ -25,9 +27,8 @@ CREATE TABLE orders (
   id INT AUTO_INCREMENT PRIMARY KEY,
   userId INT,
   totalPrice FLOAT,
-  productId INT,
-  FOREIGN KEY (userId) REFERENCES users(id),
-  FOREIGN KEY (productId) REFERENCES products(id)
+  status VARCHAR(20),
+  FOREIGN KEY (userId) REFERENCES users(id)
 );
 
 CREATE TABLE product_order (
@@ -37,3 +38,7 @@ CREATE TABLE product_order (
   FOREIGN KEY (orderId) REFERENCES orders(id),
   FOREIGN KEY (productId) REFERENCES products(id)
 );
+ALTER TABLE orders ADD COLUMN status VARCHAR(20) DEFAULT 'open';
+
+SHOW CREATE TABLE orders;
+

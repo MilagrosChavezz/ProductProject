@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { UserLogin } from '../../models/userLogin.model';
+import { UserLogin } from '../models/userLogin.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,8 @@ export class AuthService {
   }
 
   setLoginStatus(token: string) {
+
+  
     localStorage.setItem('user', token);
     this.isLoggedIn.set(true);
   }

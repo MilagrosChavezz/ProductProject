@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UserSignup } from '../../../models/userSingup.model';
+import { UserSignup } from '../../models/userSingup.model';
 import { Form, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
