@@ -23,7 +23,7 @@ const getOrdersByUserId = async (req: Request, res: Response) => {
   console.log('User ID from params:', userId);  
 
   try {
-    const orders = await OrderService.getOrder(Number(userId));
+    const orders = await OrderService.getOrderByUserId(Number(userId));
     if (!orders) {
       return void res.status(404).json({ message: 'No orders found for this user' });
     }

@@ -3,6 +3,9 @@ export interface ProductCart {
     name: string;
     price: number;
     quantity: number;
+    ProductOrder?: {
+    quantity: number;
+  };
 }
 
 export interface OrderCart {

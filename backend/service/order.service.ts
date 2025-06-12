@@ -1,22 +1,25 @@
 import db from "../models";
-import { OrderData } from "../Request/OrderData";
+import { Order } from '../models/orders';
 import ProductService from "./product.service";
 import productOrderService from "./productOrder.service";
 
-const Order = db.Order;
 
 
 class OrderService {
 
-  async getAllOrders() {
+  async getAllOrders(): Promise<Order[]> {
     return await Order.findAll();
   }
 
-  async addToCart(userId: number, productId: number) {
-    let order = await this.getOrder(userId);
+  async addToCart(userId: number, productId: number): Promise<Order> {
+    let order: Order | null = await this.getOrderByUserId(userId);
 
     if (!order) {
       order = await this.createOrder(userId);
+    }
+
+    if (!order) {
+      throw new Error("Order could not be created or found");
     }
 
     const product = await ProductService.getProductDetails(productId);
@@ -25,41 +28,48 @@ class OrderService {
       throw new Error("Product not found");
     }
 
-    const productOrder = await productOrderService.findProductOrder(
-      order!.id,
-      productId
-    );
 
-    productOrderService.addQuantity(order!.id, productId);
-   
-    if (order) {
-      order.totalPrice = (order.totalPrice || 0) + product.price;
-      await order.save();
-      return order;
-    } else {
-      throw new Error("Order could not be created or found");
-    }
-  }
+    await productOrderService.addQuantity(order.id, productId);
 
-  async getOrder(userId: number) {
-      
-    let order = await Order.findOne({
-      
-      where: { userId, status: "open" },
-       include: [
-      {
-        model: db.Product,
-        as: 'products',
-        through: { attributes: ['quantity'] }, 
-      }
-    ]
-    });
-    console.log('Order fetched:', order)
+
+       await this.calculateTotalPrice(order.id);
+      await order.reload();
+
     return order;
   }
 
-  async createOrder(userId: number) {
-    let order: OrderData | null = await Order.create({
+  async calculateTotalPrice(orderId: number): Promise<number> {
+  const order = await db.Order.findByPk(orderId, {
+    include: [
+      {
+        model: db.Product,
+        as: "products",
+        through: { attributes: ["quantity"] },
+      },
+    ],
+  });
+
+  if (!order) {
+    throw new Error("Order not found");
+  }
+
+  const products = (order as any).products || [];
+
+  const totalPrice = products.reduce((total: number, product: any) => {
+    const quantity = product.ProductOrder?.quantity || 0;
+    const price = parseFloat(product.price);
+    return total + quantity * price;
+  }, 0);
+
+  await order.update({ totalPrice });
+
+  return totalPrice;
+}
+
+
+
+  async createOrder(userId: number): Promise<Order> {
+    const order = await Order.create({
       userId,
       totalPrice: 0,
       status: "open",
@@ -67,11 +77,19 @@ class OrderService {
     return order;
   }
 
-  async getOrdersByUserId(userId: number) {
-    return await Order.findAll({ where: { userId } });
-  }
-
-  async deleteOrder(id: number) {
+  async getOrderByUserId(userId: number): Promise<Order | null> {
+  return await Order.findOne({
+    where: { userId, status: 'open' },
+    include: [
+      {
+        model: db.Product,
+        as: 'products',
+        through: { attributes: ['quantity'] },
+      },
+    ],
+  });
+}
+  async deleteOrder(id: number): Promise<number> {
     return await Order.destroy({ where: { id } });
   }
 }
