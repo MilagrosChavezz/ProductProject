@@ -1,4 +1,4 @@
-import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
+import { Sequelize, DataTypes, Model, Optional } from "sequelize";
 
 interface UserAttributes {
   id: number;
@@ -9,18 +9,21 @@ interface UserAttributes {
   address?: string;
 }
 
-type UserCreationAttributes = Optional<UserAttributes, 'id'>;
+type UserCreationAttributes = Optional<UserAttributes, "id">;
 
-export default module.exports = (sequelize: Sequelize) => {
-  class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
-    public id!: number;
-    public email!: string;
-    public password!: string;
-    public firstName?: string;
-    public lastName?: string;
-    public address?: string;
-  }
+export class User
+  extends Model<UserAttributes, UserCreationAttributes>
+  implements UserAttributes
+{
+  public id!: number;
+  public email!: string;
+  public password!: string;
+  public firstName?: string;
+  public lastName?: string;
+  public address?: string;
+}
 
+export default (sequelize: Sequelize) => {
   User.init(
     {
       id: {
@@ -32,7 +35,7 @@ export default module.exports = (sequelize: Sequelize) => {
       email: {
         type: DataTypes.STRING(100),
         allowNull: false,
-        unique: 'email',
+        unique: "email",
       },
       password: {
         type: DataTypes.STRING(255),
@@ -53,20 +56,20 @@ export default module.exports = (sequelize: Sequelize) => {
     },
     {
       sequelize,
-      tableName: 'users',
+      tableName: "users",
       timestamps: false,
       indexes: [
         {
-          name: 'PRIMARY',
+          name: "PRIMARY",
           unique: true,
-          using: 'BTREE',
-          fields: [{ name: 'id' }],
+          using: "BTREE",
+          fields: [{ name: "id" }],
         },
         {
-          name: 'email',
+          name: "email",
           unique: true,
-          using: 'BTREE',
-          fields: [{ name: 'email' }],
+          using: "BTREE",
+          fields: [{ name: "email" }],
         },
       ],
     }

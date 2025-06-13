@@ -1,12 +1,9 @@
 import db from "../models";
-import { Order } from '../models/orders';
+import { Order } from "../models/orders";
 import ProductService from "./product.service";
 import productOrderService from "./productOrder.service";
 
-
-
 class OrderService {
-
   async getAllOrders(): Promise<Order[]> {
     return await Order.findAll();
   }
@@ -28,45 +25,41 @@ class OrderService {
       throw new Error("Product not found");
     }
 
-
     await productOrderService.addQuantity(order.id, productId);
 
-
-       await this.calculateTotalPrice(order.id);
-      await order.reload();
+    await this.calculateTotalPrice(order.id);
+    await order.reload();
 
     return order;
   }
 
   async calculateTotalPrice(orderId: number): Promise<number> {
-  const order = await db.Order.findByPk(orderId, {
-    include: [
-      {
-        model: db.Product,
-        as: "products",
-        through: { attributes: ["quantity"] },
-      },
-    ],
-  });
+    const order = await db.Order.findByPk(orderId, {
+      include: [
+        {
+          model: db.Product,
+          as: "products",
+          through: { attributes: ["quantity"] },
+        },
+      ],
+    });
 
-  if (!order) {
-    throw new Error("Order not found");
+    if (!order) {
+      throw new Error("Order not found");
+    }
+
+    const products = (order as any).products || [];
+
+    const totalPrice = products.reduce((total: number, product: any) => {
+      const quantity = product.ProductOrder?.quantity || 0;
+      const price = parseFloat(product.price);
+      return total + quantity * price;
+    }, 0);
+
+    await order.update({ totalPrice });
+
+    return totalPrice;
   }
-
-  const products = (order as any).products || [];
-
-  const totalPrice = products.reduce((total: number, product: any) => {
-    const quantity = product.ProductOrder?.quantity || 0;
-    const price = parseFloat(product.price);
-    return total + quantity * price;
-  }, 0);
-
-  await order.update({ totalPrice });
-
-  return totalPrice;
-}
-
-
 
   async createOrder(userId: number): Promise<Order> {
     const order = await Order.create({
@@ -78,17 +71,17 @@ class OrderService {
   }
 
   async getOrderByUserId(userId: number): Promise<Order | null> {
-  return await Order.findOne({
-    where: { userId, status: 'open' },
-    include: [
-      {
-        model: db.Product,
-        as: 'products',
-        through: { attributes: ['quantity'] },
-      },
-    ],
-  });
-}
+    return await Order.findOne({
+      where: { userId, status: "open" },
+      include: [
+        {
+          model: db.Product,
+          as: "products",
+          through: { attributes: ["quantity"] },
+        },
+      ],
+    });
+  }
   async deleteOrder(id: number): Promise<number> {
     return await Order.destroy({ where: { id } });
   }

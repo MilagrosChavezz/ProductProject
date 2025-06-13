@@ -59,22 +59,16 @@ const logIn = async (req: Request, res: Response) => {
 
 export const getProfile = async (req: Request, res: Response) => {
   try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) return void res.status(401).json({ message: 'Token no proporcionado' });
-     
-   
-       
-
-    const token = authHeader.split(' ')[1];
-    const decoded = jwt.verify(token, SECRET_KEY) as { id: number };
+     const userId = (req as any).user?.id;
+    if (!userId) return void res.status(401).json({ message: 'Unable to show user profile' });
     
-    const user = await userService.getProfile(decoded.id);
-    if (!user) return void res.status(404).json({ message: 'Usuario no encontrado' });
+    const user = await userService.getProfile(userId);
+    if (!user) return void res.status(404).json({ message: 'User not found' });
 
     res.status(200).json(user);
   
   } catch (error) {
-     res.status(401).json({ message: 'Token inválido o expirado', error });
+     res.status(401).json({ message: 'Error to obtain user profile', error });
 
   }
 };

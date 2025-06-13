@@ -1,4 +1,4 @@
-import { Sequelize, DataTypes, Model, Optional } from 'sequelize';
+import { Sequelize, DataTypes, Model, Optional } from "sequelize";
 
 interface ProductAttributes {
   id: number;
@@ -9,19 +9,21 @@ interface ProductAttributes {
   category?: string;
 }
 
-type ProductCreationAttributes = Optional<ProductAttributes, 'id'>;
+type ProductCreationAttributes = Optional<ProductAttributes, "id">;
 
-export default module.exports = (sequelize: Sequelize)=> {
-  class Product extends Model<ProductAttributes, ProductCreationAttributes>
-    implements ProductAttributes {
-    public id!: number;
-    public name?: string;
-    public description?: string;
-    public price?: number;
-    public imageUrl?: string;
-    public category?: string;
-  }
+export class Product
+  extends Model<ProductAttributes, ProductCreationAttributes>
+  implements ProductAttributes
+{
+  public id!: number;
+  public name?: string;
+  public description?: string;
+  public price?: number;
+  public imageUrl?: string;
+  public category?: string;
+}
 
+export default (sequelize: Sequelize) => {
   Product.init(
     {
       id: {
@@ -53,14 +55,14 @@ export default module.exports = (sequelize: Sequelize)=> {
     },
     {
       sequelize,
-      tableName: 'products',
+      tableName: "products",
       timestamps: false,
       indexes: [
         {
-          name: 'PRIMARY',
+          name: "PRIMARY",
           unique: true,
-          using: 'BTREE',
-          fields: [{ name: 'id' }],
+          using: "BTREE",
+          fields: [{ name: "id" }],
         },
       ],
     }

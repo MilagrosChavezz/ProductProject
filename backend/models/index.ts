@@ -31,3 +31,5 @@ db.Order.belongsToMany(db.Product, {
 });
 
 export default db;
+
+

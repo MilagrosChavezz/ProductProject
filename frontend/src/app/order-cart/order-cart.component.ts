@@ -19,6 +19,7 @@ export class OrderCartComponent implements OnInit {
   ngOnInit() {
     this.loadCart();
   }
+
   loadCart() {
     this.orderService.getUserCart().subscribe({
       next: (order: OrderCart) => {
@@ -32,11 +33,10 @@ export class OrderCartComponent implements OnInit {
           id: product.id,
           name: product.name,
           price: product.price,
-         quantity: product.ProductOrder?.quantity || 1,
+          quantity: product.ProductOrder?.quantity || 1,
         }));
 
-        console.log('Cart loaded:', productsMapped);
-        console.log('Total price:', order.totalPrice || 0);
+        
 
         this.orderItems.set(productsMapped);
         this.total.set(order.totalPrice || 0);

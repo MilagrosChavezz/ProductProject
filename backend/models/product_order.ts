@@ -9,8 +9,8 @@ interface ProductOrderAttributes {
 
 type ProductOrderCreationAttributes = Optional<ProductOrderAttributes, 'id' | 'quantity'>;
 
-export default (sequelize: Sequelize) => {
-  class ProductOrder extends Model<ProductOrderAttributes, ProductOrderCreationAttributes>
+
+ export class ProductOrder extends Model<ProductOrderAttributes, ProductOrderCreationAttributes>
     implements ProductOrderAttributes {
     public id!: number;
     public productId!: number;
@@ -18,6 +18,7 @@ export default (sequelize: Sequelize) => {
     public quantity!: number;
   }
 
+export default (sequelize: Sequelize) => {
   ProductOrder.init(
     {
       id: {
@@ -81,3 +82,4 @@ export default (sequelize: Sequelize) => {
 
   return ProductOrder;
 };
+
