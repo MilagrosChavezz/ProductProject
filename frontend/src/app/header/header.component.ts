@@ -1,13 +1,10 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-
   effect,
-
   signal,
-  SimpleChanges,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -20,7 +17,7 @@ export class HeaderComponent  {
 
   isLoggedIn = signal<boolean>(false); 
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService,private router:Router) {
     effect(() => {
       this.isLoggedIn.set(this.authService.isLoggedIn())
     });
@@ -28,8 +25,17 @@ export class HeaderComponent  {
   
   menuOpen = false;
 
+  isAdmin() {
+    console.log('Checking if user is admin');
+    console.log('Admin status:', this.authService.isAdmin());
+    return this.authService.isAdmin();
+  }
+  goToAddProduct() {
+    this.router.navigate(['/products/add']);
+  }
   logout() {
     this.authService.logout();
+    this.router.navigate(['/login']);
   }
   toggleMenu() {
     this.menuOpen = !this.menuOpen;

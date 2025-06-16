@@ -13,6 +13,14 @@
     <a *ngIf="!isLoggedIn()" routerLink="/login" class="btn login" tabindex="0">Login</a>
     <a *ngIf="!isLoggedIn()" routerLink="/signup" class="btn signup" tabindex="0">Signup</a>
     <a *ngIf="isLoggedIn()" (click)="logout()" class="btn logout" tabindex="0">Logout</a>
+    <a *ngIf="isAdmin()" 
+   (click)="goToAddProduct()" 
+   routerLink="/signup" 
+   class="btn btn-success btn-lg px-4 py-2 shadow-sm fw-bold text-uppercase">
+  <i class="fas fa-plus me-2"></i>
+  Add Product
+</a>
+
     <a routerLink="/order" class="cart-link" aria-label="Shopping Cart" tabindex="0">
       <img src="/shopping-cart.png" alt="Shopping Cart" class="cart-icon" />
     </a>

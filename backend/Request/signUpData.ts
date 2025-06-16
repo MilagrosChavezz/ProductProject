@@ -4,4 +4,5 @@ export interface SignUpData {
   firstName?: string;
   lastName?: string;
   address?: string;
+  role?: string; 
 }

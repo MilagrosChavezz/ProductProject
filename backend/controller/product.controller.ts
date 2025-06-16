@@ -4,11 +4,18 @@ import { ProductService } from '../service/product.service';
 const productService = new ProductService();
 
 export const addProduct = async (req: Request, res: Response): Promise<void> => {
+
+   if (!req.user || req.user.role !== 'admin') {
+     res.status(403).json({ message: 'Denied access. Admins only.' });
+     return;
+   }
+   
   try {
+
     const { name, description, price, imageUrl, category } = req.body;
 
     if (!name || !price) {
-      res.status(400).json({ message: 'El nombre y el precio son obligatorios' });
+      res.status(400).json({ message: 'Name and price are required.' });
       return;
     }
 
@@ -20,9 +27,9 @@ export const addProduct = async (req: Request, res: Response): Promise<void> => 
       category,
     });
 
-    res.status(201).json({ message: 'Producto creado con éxito', product: newProduct });
+    res.status(201).json({ message: 'Product created successfully', product: newProduct });
   } catch (error) {
-    res.status(500).json({ message: 'Error al crear el producto', error });
+    res.status(500).json({ message: 'Error creating product', error });
   }
 };
 
@@ -32,7 +39,7 @@ export const listProducts = async (req: Request, res: Response) => {
     res.status(200).json(products);
   } catch (error) {
      console.error('Controller error in listProducts:', error);
-    res.status(500).json({ message: 'Error to get all products', error });
+    res.status(500).json({ message: 'Error getting all products', error });
   }
 };
 

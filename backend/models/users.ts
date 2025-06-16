@@ -7,6 +7,7 @@ interface UserAttributes {
   firstName?: string;
   lastName?: string;
   address?: string;
+  role?: string; 
 }
 
 type UserCreationAttributes = Optional<UserAttributes, "id">;
@@ -21,6 +22,7 @@ export class User
   public firstName?: string;
   public lastName?: string;
   public address?: string;
+  public role?: string; 
 }
 
 export default (sequelize: Sequelize) => {
@@ -52,6 +54,11 @@ export default (sequelize: Sequelize) => {
       address: {
         type: DataTypes.TEXT,
         allowNull: true,
+      },
+      role: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+        defaultValue: "user", 
       },
     },
     {

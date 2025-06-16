@@ -13,7 +13,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of orderItems()">
-        <td>{{ item.name }}</td>
+        <td> <a [routerLink]="['/products', item.id]" class="product-link">{{ item.name }}</a></td>
         <td>{{ item.price | currency:'USD' }}</td>
         <td>{{ item.quantity }}</td>
         <td>{{ (item.price * item.quantity) | currency:'USD' }}</td>

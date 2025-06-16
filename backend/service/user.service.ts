@@ -28,6 +28,7 @@ export class UserService {
       firstName: data.firstName,
       lastName: data.lastName,
       address: data.address,
+      role: data.role || "user", 
     });
 
     return newUser;

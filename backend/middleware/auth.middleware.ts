@@ -9,8 +9,10 @@ const SECRET_KEY = process.env.SECRET_KEY!;
 interface JwtPayload {
   id: number;
   email: string;
+  role: string;
   iat: number;
   exp: number;
+  
 }
 
 
@@ -39,3 +41,12 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
     return void res.status(403).json({ message: 'expired token' });
   }
 };
+export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+  if (req.user && req.user.role === 'admin') {
+    next();
+  } else {
+    return void res.status(403).json({ message: 'Access denied. Admins only.' });
+  }
+}
+
+module.exports = { authenticateToken, isAdmin };

@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component,signal } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 })
 export class ProductDetailsComponent {
 
-   product!: Product;
+   product = signal<Product | null>(null);
 
    constructor(
     private route: ActivatedRoute,
@@ -23,6 +23,7 @@ export class ProductDetailsComponent {
   ) {}
 
     ngOnInit() {
+      
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.loadProduct(id);
   }
@@ -30,7 +31,7 @@ export class ProductDetailsComponent {
   loadProduct(id: number) {
     this.productService.getProductById(id).subscribe({
       next: (data) => {
-        this.product = data;
+        this.product.set(data);
       },
       error: (err) => {
         console.error('Error to load product', err);
@@ -40,7 +41,8 @@ export class ProductDetailsComponent {
 
  AddToCart() {
 
-  this.orderService.addProductToCart(this.product).subscribe({
+  if (!this.product()) return;
+  this.orderService.addProductToCart(this.product()!).subscribe({
     next: () => {
       Swal.fire({
         icon: 'success',

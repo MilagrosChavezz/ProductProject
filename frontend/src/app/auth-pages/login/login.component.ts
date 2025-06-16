@@ -29,15 +29,18 @@ export class LoginComponent implements OnInit {
 
   OnSubmit() {
    
-    const userLogin: UserLogin = {
-      email: this.loginForm.value.email,
-      password: this.loginForm.value.password
-    };
-    
-    this.authService.login(userLogin).subscribe({
+   const userLogin: UserLogin = {
+  email: this.loginForm.value.email,
+  password: this.loginForm.value.password
+};
+
+this.authService.login(userLogin).subscribe({
   next: (response) => {
     console.log('Login successful', response);
-    this.authService.setLoginStatus(response.token || '');
+
+  
+    this.authService.setLoginStatus(response.token ?? '', response.user);
+
     this.router.navigate(['/products']);
   },
   error: (error) => {
@@ -50,6 +53,7 @@ export class LoginComponent implements OnInit {
     }
   }
 });
+
 
   }
 }
