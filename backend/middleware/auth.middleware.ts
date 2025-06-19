@@ -1,3 +1,4 @@
+import debug from 'debug';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -26,7 +27,7 @@ declare global {
 
 export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
-
+console.log('Auth header:', authHeader);
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return void res.status(401).json({ message: 'No token found' });
   }
@@ -42,10 +43,16 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
   }
 };
 export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+  console.log('User in request:', req.user);
   if (req.user && req.user.role === 'admin') {
     next();
   } else {
-    return void res.status(403).json({ message: 'Access denied. Admins only.' });
+    return void res.status(403).json({ 
+      message: 'Access denied. Admins only.middle',
+      debug: { user: req.user }
+    });
+  
+
   }
 }
 

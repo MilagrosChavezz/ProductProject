@@ -1,0 +1,72 @@
+<div class="container mt-4">
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input
+        id="name"
+        type="text"
+        class="form-control"
+        formControlName="name"
+        [class.is-invalid]="productForm.get('name')?.invalid && productForm.get('name')?.touched"
+        placeholder="Enter product name"
+      />
+      <div class="invalid-feedback">
+        Name is required.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea
+        id="description"
+        class="form-control"
+        formControlName="description"
+        rows="3"
+        placeholder="Enter description (optional)"
+      ></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="price" class="form-label">Price</label>
+      <input
+        id="price"
+        type="number"
+        class="form-control"
+        formControlName="price"
+        min="0"
+        step="0.01"
+        [class.is-invalid]="productForm.get('price')?.invalid && productForm.get('price')?.touched"
+        placeholder="Enter price"
+      />
+      <div class="invalid-feedback">
+        Price is required and must be zero or more.
+      </div>
+    </div>
+
+    <div class="mb-3">
+    <label for="image" class="form-label">Upload Image</label>
+    <input
+      class="form-control"
+      type="file"
+      id="image"
+      (change)="onFileSelected($event)"
+      accept="image/*"
+    />
+  </div>
+
+    <div class="mb-3">
+      <label for="category" class="form-label">Category</label>
+      <input
+        id="category"
+        type="text"
+        class="form-control"
+        formControlName="category"
+        placeholder="Enter category (optional)"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">
+      Save Product
+    </button>
+  </form>
+</div>

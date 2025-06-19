@@ -31,7 +31,7 @@ export class HeaderComponent  {
     return this.authService.isAdmin();
   }
   goToAddProduct() {
-    this.router.navigate(['/products/add']);
+    this.router.navigate(['/products/new']);
   }
   logout() {
     this.authService.logout();

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { OrderService } from '../../services/order.service';
 import Swal from 'sweetalert2';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-product-details',
@@ -13,6 +14,7 @@ import Swal from 'sweetalert2';
 })
 export class ProductDetailsComponent {
 
+   apiUrl = environment.apiUrl;
    product = signal<Product | null>(null);
 
    constructor(

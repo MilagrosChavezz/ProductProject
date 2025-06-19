@@ -17,17 +17,17 @@ const createOrder = async (req: Request, res: Response) => {
 };
 
 const getOrdersByUserId = async (req: Request, res: Response) => {
-   const userId = req.user?.id;
-
-  
-  console.log('User ID from params:', userId);  
+   const userId:number|undefined = req.user?.id;
 
   try {
-    const orders = await OrderService.getOrderByUserId(Number(userId));
+    if (!userId) {
+      return void res.status(400).json({ message: 'User ID is required' });
+    }
+    const orders = await OrderService.getOrderByUserId(userId);
     if (!orders) {
       return void res.status(404).json({ message: 'No orders found for this user' });
     }
-    console.log('Orders fetched:', orders);
+
     res.status(200).json(orders);
   } catch (error) {
       console.error('Error details:', error);

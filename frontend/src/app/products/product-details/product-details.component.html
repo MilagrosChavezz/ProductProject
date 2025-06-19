@@ -4,11 +4,8 @@
       <div class="card shadow-sm border-0">
         <div class="row g-0">
           <div class="col-md-5">
-            <img
-              [src]="product()?.imageUrl"
-              class="img-fluid rounded-start"
-              alt="{{ product()?.name }}"
-            />
+          <img [src]="apiUrl + product()?.imageUrl" alt="Imagen producto" />
+
           </div>
           <div class="col-md-7">
             <div class="card-body">

@@ -3,7 +3,6 @@ import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { UserLogin } from '../models/userLogin.model';
 import { AuthResponse } from '../models/authResponse.model';
-import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
 
 
@@ -35,6 +34,7 @@ login(userLogin: UserLogin) {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
     this.isLoggedIn.set(false);
   }
 

@@ -1,4 +1,4 @@
-import db from "../models";
+import { Product } from "../models/products";
 import { Order } from "../models/orders";
 import ProductService from "./product.service";
 import productOrderService from "./productOrder.service";
@@ -34,10 +34,10 @@ class OrderService {
   }
 
   async calculateTotalPrice(orderId: number): Promise<number> {
-    const order = await db.Order.findByPk(orderId, {
+    const order = await Order.findByPk(orderId, {
       include: [
         {
-          model: db.Product,
+          model: Product,
           as: "products",
           through: { attributes: ["quantity"] },
         },
@@ -75,7 +75,7 @@ class OrderService {
       where: { userId, status: "open" },
       include: [
         {
-          model: db.Product,
+          model: Product,
           as: "products",
           through: { attributes: ["quantity"] },
         },

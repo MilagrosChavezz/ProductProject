@@ -21,7 +21,7 @@ getInitialsAvatar(name: string): string {
   getUserProfile() {
     return this.http.get<User>(`${this.url}/getProfile`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('user')}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     });
 }

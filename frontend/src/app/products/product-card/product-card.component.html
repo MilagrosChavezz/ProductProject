@@ -2,12 +2,12 @@
   class="product-card"
   tabindex="0"
   role="region"
-  aria-label="Product card for Organic Green Tea"
+  
 >
   <img
     class="product-image"
-    src="{{ product()?.imageUrl }}"
-    alt="Organic Green Tea packaging with leaves"
+    [src]="apiUrl + product()?.imageUrl"
+    [alt]="product()?.name"
     loading="lazy"
   />
   <div class="product-content">

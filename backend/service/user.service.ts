@@ -50,7 +50,7 @@ export class UserService {
       throw error;
     }
 
-    const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, {
+    const token = jwt.sign({ id: user.id, email: user.email ,role:user.role}, SECRET_KEY, {
       expiresIn: "2h",
     });
 

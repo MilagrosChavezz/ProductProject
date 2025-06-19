@@ -18,6 +18,11 @@ app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/users', userRoutes);
 
+
+
+app.use('/api/uploads', express.static('uploads'));
+
+
 db.sequelize.authenticate()
   .then(() => {
     console.log('✅ Conectado a la base de datos');

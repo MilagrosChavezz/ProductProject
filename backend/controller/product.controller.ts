@@ -3,16 +3,14 @@ import { ProductService } from '../service/product.service';
 
 const productService = new ProductService();
 
-export const addProduct = async (req: Request, res: Response): Promise<void> => {
+export const addNewProduct = async (req: Request, res: Response)=> {
 
-   if (!req.user || req.user.role !== 'admin') {
-     res.status(403).json({ message: 'Denied access. Admins only.' });
-     return;
-   }
-   
+    console.log('Request body:', req.body);
   try {
 
-    const { name, description, price, imageUrl, category } = req.body;
+    const { name, description, price, category } = req.body;
+    const imageFile = (req as any).file; 
+    const imageUrl = imageFile ? `/uploads/${imageFile.filename}` : null;
 
     if (!name || !price) {
       res.status(400).json({ message: 'Name and price are required.' });
@@ -23,7 +21,7 @@ export const addProduct = async (req: Request, res: Response): Promise<void> => 
       name,
       description,
       price,
-      imageUrl,
+      imageUrl: imageUrl || undefined,
       category,
     });
 
@@ -61,6 +59,6 @@ export const getProductDetails = async (req: Request, res: Response) => {
   }
 };
 
-export default { addProduct, listProducts, getProductDetails,addProductToCart };
+export default { addNewProduct, listProducts, getProductDetails,addProductToCart };
 
 

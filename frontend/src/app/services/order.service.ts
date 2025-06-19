@@ -18,11 +18,14 @@ export class OrderService {
 
  
   getUserCart():Observable<OrderCart> {
-    console.log('Fetching user cart from:', `${this.url}/cart`);
-    console.log('Authorization header:', `Bearer ${localStorage.getItem('user')}`);
+   const token = localStorage.getItem('token');
+if (token) {
+  console.log(JSON.parse(atob(token.split('.')[1])));
+}
+
     return this.http.get<OrderCart>(`${this.url}/cart`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('user')}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     });
   }
@@ -30,7 +33,7 @@ export class OrderService {
     addProductToCart(product: Product) {
     return this.http.post(`${this.url}/add`,{ productId: product.id }, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('user')}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     });
   }
