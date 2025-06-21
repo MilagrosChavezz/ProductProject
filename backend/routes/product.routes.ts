@@ -12,9 +12,12 @@ router.post('/test', (req, res) => {
   res.status(200).json({ message: 'Funciona correctamente' });
 });
 
+router.get('/search', ProductController.filterProducts);
 router.get('/', ProductController.listProducts);
 router.post('/new',authenticateToken,isAdmin,uploadSingleImage,ProductController.addNewProduct);
 router.post('/cart/:id', ProductController.addProductToCart);
 router.get('/:id', ProductController.getProductDetails);
+
+
 
 export default router;

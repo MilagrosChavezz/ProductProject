@@ -67,6 +67,24 @@ export class UserService {
     }
     return user;
   }
+
+  async createDefaultAdmin() {
+  const existingAdmin = await User.findOne({ where: { email: "admin@admin.com" } });
+  if (!existingAdmin) {
+    const hashedPassword = await bcrypt.hash("admin123", 10);
+    await User.create({
+      email: "admin@admin.com",
+      password: hashedPassword,
+      firstName: "Admin",
+      lastName: "Main",
+      address: "System",
+      role: "admin",
+    });
+    console.log("Admin created.");
+  } else {
+    console.log("admin already exist.");
+  }
+}
 }
 
 export default new UserService();

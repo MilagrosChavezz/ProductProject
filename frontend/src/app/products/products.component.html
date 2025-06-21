@@ -1,3 +1,19 @@
+<input type="text" placeholder="Search..." [(ngModel)]="searchTerm" (input)="onFilterChange()" />
+<button (click)="clearFilters()" class="btn btn-outline-secondary">
+  Remove filters
+</button>
+
+
+<select [(ngModel)]="priceOrder" (change)="onFilterChange()">
+  <option value="">Ordenar por precio</option>
+  <option value="asc">Menor a mayor</option>
+  <option value="desc">Mayor a menor</option>
+</select>
+
+<div *ngIf="noResults" class="alert alert-warning">
+  No products found for this filter.
+</div>
+
 <div class="products-list" role="list" aria-label="Product listing">
   @for(item of products(); track item.id){
   <app-product-card [product]="item" role="listitem"></app-product-card>

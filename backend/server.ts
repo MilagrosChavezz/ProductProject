@@ -1,7 +1,7 @@
 
 import express, { Application } from 'express';
 import cors from 'cors';
-
+import { initializeDefaults } from './startup/init';
 import userRoutes from './routes/user.routes';
 import productRoutes from './routes/product.routes';
 import orderRoutes from './routes/order.routes';
@@ -23,13 +23,16 @@ app.use('/api/users', userRoutes);
 app.use('/api/uploads', express.static('uploads'));
 
 
+
 db.sequelize.authenticate()
   .then(() => {
     console.log('✅ Conectado a la base de datos');
     return db.sequelize.sync();
   })
-  .then(() => {
+  .then(async () => {
+    await initializeDefaults();
     app.listen(PORT, () => {
+      
       console.log(`Servidor escuchando en puerto ${PORT}`);
     });
   })

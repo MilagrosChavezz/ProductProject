@@ -1,7 +1,39 @@
 import { ProductData } from "../Request/productData";
+import { Op } from 'sequelize';
 import { Product } from "../models/products";
+import { ProductFilters } from "../Request/productFilters";
 
 export class ProductService {
+
+  async filterProducts(filters: ProductFilters): Promise<Product[]> {
+    const { search , order } = filters;
+
+    const whereClause: any = {};
+
+    
+    if (search) {
+      whereClause[Op.or] = [
+        { name: { [Op.like]: `%${search}%` } },
+        { description: { [Op.like]: `%${search}%` } },
+        { category: { [Op.like]: `%${search}%` } },
+      ];
+    }
+
+   
+
+  const orderClause: [string, 'ASC' | 'DESC'][] = [];
+
+  if (order === 'asc' || order === 'desc') {
+    orderClause.push(['price', order.toUpperCase() as 'ASC' | 'DESC']);
+  }
+
+  return Product.findAll({
+    where: whereClause,
+    order: orderClause,
+  });
+  }
+
+
   async getAllProducts(): Promise<Product[]> {
     try {
       return await Product.findAll();

@@ -1,15 +1,44 @@
 import { Request, Response } from 'express';
 import { ProductService } from '../service/product.service';
+import { ProductFilters } from '../Request/productFilters';
+
 
 const productService = new ProductService();
 
-export const addNewProduct = async (req: Request, res: Response)=> {
+function getStringParam(param: any): string | undefined {
+  if (typeof param === "string") return param;
+  return undefined;
+}
+function getOrderParam (param: unknown): 'asc' | 'desc' | undefined  {
+  if (typeof param === 'string' && (param === 'asc' || param === 'desc')) {
+    return param;
+  }
+  return undefined;
+};
 
-    console.log('Request body:', req.body);
+export const filterProducts = async (req: Request, res: Response) => {
+  try {
+    const filters: ProductFilters = {
+      search: getStringParam(req.query.search),
+      order: getOrderParam(req.query.order),
+    };
+
+
+    const products = await productService.filterProducts(filters);
+    res.json(products);
+  } catch (error) {
+    console.error("Error to filter products:", error);
+    res.status(500).json({ message: "Internal error" });
+  }
+}
+
+export const addNewProduct = async (req: Request, res: Response) => {
+
+  console.log('Request body:', req.body);
   try {
 
     const { name, description, price, category } = req.body;
-    const imageFile = (req as any).file; 
+    const imageFile = (req as any).file;
     const imageUrl = imageFile ? `/uploads/${imageFile.filename}` : null;
 
     if (!name || !price) {
@@ -36,13 +65,13 @@ export const listProducts = async (req: Request, res: Response) => {
     const products = await productService.getAllProducts();
     res.status(200).json(products);
   } catch (error) {
-     console.error('Controller error in listProducts:', error);
+    console.error('Controller error in listProducts:', error);
     res.status(500).json({ message: 'Error getting all products', error });
   }
 };
 
-export const addProductToCart = async(req: Request, res: Response) => {
-    throw new Error('Function not implemented.');
+export const addProductToCart = async (req: Request, res: Response) => {
+  throw new Error('Function not implemented.');
 }
 
 export const getProductDetails = async (req: Request, res: Response) => {
@@ -59,6 +88,6 @@ export const getProductDetails = async (req: Request, res: Response) => {
   }
 };
 
-export default { addNewProduct, listProducts, getProductDetails,addProductToCart };
+export default { addNewProduct, listProducts, getProductDetails, addProductToCart };
 
 
