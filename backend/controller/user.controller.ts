@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import userService from '../service/user.service';
-import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
 dotenv.config();

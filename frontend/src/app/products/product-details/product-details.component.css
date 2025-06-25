@@ -1,16 +1,28 @@
-img {
-  max-height: 300px;
-  object-fit: cover;
+.card {
+  height: 100%;
+  min-height: 350px; 
 }
-  .product-category {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background-color: #e0f0ff;
-  color: #007BFF;
-  padding: 4px 12px;
-  border-radius: 999px; /* óvalo */
-  font-size: 0.75rem;
+
+.row.g-0 {
+  height: 100%;
+}
+
+.col-md-5,
+.col-md-7 {
+  display: flex;
+  flex-direction: column;
+}
+
+.col-md-5 img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover; 
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
+
+.color-price{
+  color: black;
   font-weight: bold;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
