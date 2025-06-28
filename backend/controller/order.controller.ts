@@ -24,6 +24,7 @@ const getOrdersByUserId = async (req: Request, res: Response) => {
       return void res.status(400).json({ message: 'User ID is required' });
     }
     const orders = await OrderService.getOrderByUserId(userId);
+    
     if (!orders) {
       return void res.status(404).json({ message: 'No orders found for this user' });
     }

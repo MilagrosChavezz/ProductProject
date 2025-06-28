@@ -43,7 +43,7 @@ ALTER TABLE users ADD COLUMN role VARCHAR(20) DEFAULT 'user';
 ALTER TABLE orders ADD COLUMN status VARCHAR(20) DEFAULT 'open';
 
 INSERT INTO users (email, password, firstName, lastName, role) 
-VALUES ('admin@example.com', '123456', 'admin', 'Rodriguez', 'admin');
+
 
 SHOW CREATE TABLE orders;
 

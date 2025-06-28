@@ -3,21 +3,23 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { LogInData } from "../Request/logInData";
-import { SignUpData } from "../Request/signUpData";
+import { SignUpData } from "../Request/userData";
 
 dotenv.config();
 
 const SECRET_KEY = process.env.SECRET_KEY as string;
 
 export class UserService {
+
   findUserByEmail(email: string) {
     return User.findOne({ where: { email } });
   }
 
   async signUp(data: SignUpData) {
-    const existingUser = await User.findOne({ where: { email: data.email } });
+    const existingUser = await this.findUserByEmail(data.email);
+
     if (existingUser) {
-      throw new Error("El correo ya está registrado");
+      throw new Error("The email is already registered");
     }
 
     const hashedPassword = await bcrypt.hash(data.password, 10);
@@ -35,7 +37,7 @@ export class UserService {
   }
 
   async logIn(data: LogInData) {
-    const user = await User.findOne({ where: { email: data.email } });
+    const user = await this.findUserByEmail(data.email);
 
     if (!user) {
       const error = new Error("User not found") as Error & { status?: number };
@@ -44,6 +46,7 @@ export class UserService {
     }
 
     const isMatch = await bcrypt.compare(data.password, user.password);
+    
     if (!isMatch) {
        const error = new Error("Invalid password") as Error & { status?: number };
       error.status = 401;

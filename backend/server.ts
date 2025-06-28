@@ -5,8 +5,8 @@ import { initializeDefaults } from './startup/init';
 import userRoutes from './routes/user.routes';
 import productRoutes from './routes/product.routes';
 import orderRoutes from './routes/order.routes';
-
 import db from './models';
+
 
 const app: Application = express();
 const PORT: number = 3000;

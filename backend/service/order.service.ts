@@ -4,32 +4,27 @@ import ProductService from "./product.service";
 import productOrderService from "./productOrder.service";
 
 class OrderService {
+  
   async getAllOrders(): Promise<Order[]> {
-    return await Order.findAll();
+    return Order.findAll();
   }
 
   async addToCart(userId: number, productId: number): Promise<Order> {
-    let order: Order | null = await this.getOrderByUserId(userId);
+    let order = await this.getOrderByUserId(userId);
 
     if (!order) {
       order = await this.createOrder(userId);
     }
 
-    if (!order) {
-      throw new Error("Order could not be created or found");
-    }
-
     const product = await ProductService.getProductDetails(productId);
-
     if (!product) {
-      throw new Error("Product not found");
+      throw new Error(`Product with ID ${productId} not found`);
     }
 
     await productOrderService.addQuantity(order.id, productId);
-
     await this.calculateTotalPrice(order.id);
-    await order.reload();
 
+    await order.reload();
     return order;
   }
 
@@ -52,7 +47,7 @@ class OrderService {
 
     const totalPrice = products.reduce((total: number, product: any) => {
       const quantity = product.ProductOrder?.quantity || 0;
-      const price = parseFloat(product.price);
+      const price = product.price;
       return total + quantity * price;
     }, 0);
 
@@ -62,16 +57,15 @@ class OrderService {
   }
 
   async createOrder(userId: number): Promise<Order> {
-    const order = await Order.create({
+    return Order.create({
       userId,
       totalPrice: 0,
       status: "open",
     });
-    return order;
   }
 
   async getOrderByUserId(userId: number): Promise<Order | null> {
-    return await Order.findOne({
+    return Order.findOne({
       where: { userId, status: "open" },
       include: [
         {
@@ -82,8 +76,9 @@ class OrderService {
       ],
     });
   }
+
   async deleteOrder(id: number): Promise<number> {
-    return await Order.destroy({ where: { id } });
+    return Order.destroy({ where: { id } });
   }
 }
 

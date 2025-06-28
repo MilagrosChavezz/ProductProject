@@ -2,17 +2,18 @@ import { ProductData } from "../Request/productData";
 import { Op } from 'sequelize';
 import { Product } from "../models/products";
 import { ProductFilters } from "../Request/productFilters";
+import { WhereOptions } from "sequelize";
 
 export class ProductService {
 
   async filterProducts(filters: ProductFilters): Promise<Product[]> {
     const { search , order } = filters;
-
-    const whereClause: any = {};
+    
+    const whereClause: WhereOptions = {};
 
     
     if (search) {
-      whereClause[Op.or] = [
+      (whereClause as any)[Op.or] = [
         { name: { [Op.like]: `%${search}%` } },
         { description: { [Op.like]: `%${search}%` } },
         { category: { [Op.like]: `%${search}%` } },

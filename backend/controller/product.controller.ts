@@ -34,7 +34,6 @@ export const filterProducts = async (req: Request, res: Response) => {
 
 export const addNewProduct = async (req: Request, res: Response) => {
 
-  console.log('Request body:', req.body);
   try {
 
     const { name, description, price, category } = req.body;
@@ -70,9 +69,7 @@ export const listProducts = async (req: Request, res: Response) => {
   }
 };
 
-export const addProductToCart = async (req: Request, res: Response) => {
-  throw new Error('Function not implemented.');
-}
+
 
 export const getProductDetails = async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -88,6 +85,6 @@ export const getProductDetails = async (req: Request, res: Response) => {
   }
 };
 
-export default { addNewProduct, listProducts, getProductDetails, addProductToCart };
+export default { addNewProduct, listProducts, getProductDetails };
 
 

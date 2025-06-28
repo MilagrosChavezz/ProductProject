@@ -7,23 +7,18 @@
   height: 100%;
 }
 
-.col-md-5,
-.col-md-7 {
-  display: flex;
-  flex-direction: column;
+.col-md-5 {
+  max-height: 100%;
+  overflow: hidden;
 }
 
 .col-md-5 img {
   height: 100%;
   width: 100%;
-  object-fit: cover; 
-  border-top-left-radius: 0.5rem;
-  border-bottom-left-radius: 0.5rem;
+  object-fit: cover;
 }
 
-.product-category{
-  
-}
+
 
 .color-price{
   color: black;

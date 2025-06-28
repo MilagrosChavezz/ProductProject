@@ -23,13 +23,13 @@ constructor(private productService:ProductService){}
 
 ngOnInit(){
 
-   const savedFilters = localStorage.getItem('productFilters');
+   const savedFilters = this.productService.getFilters();
   if (savedFilters) {
     const filters = JSON.parse(savedFilters);
     this.searchTerm = filters.search || '';
     this.priceOrder = filters.priceOrder || '';
-    this.onFilterChange(); 
-  }else{
+    this.onFilterChange();
+  } else {
     this.productService.getProducts().subscribe((data: Product[]) => {
     this.products.set(data);
   });

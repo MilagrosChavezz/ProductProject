@@ -45,6 +45,10 @@ console.log(`${this.url}/search`, { params });
     return this.http.get<Product>(`${this.url}/${id}`);
   }
 
+  getFilters(){
+    return localStorage.getItem('productFilters')
+  }
+
   addFilter(){
     localStorage.removeItem('productFilters'); 
   }
