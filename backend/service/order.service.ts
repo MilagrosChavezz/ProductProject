@@ -9,8 +9,9 @@ class OrderService {
     return Order.findAll();
   }
 
-  async addToCart(userId: number, productId: number): Promise<Order> {
+  async addToCart(userId: number, productId: number, quantity: number = 1): Promise<Order> {
     let order = await this.getOrderByUserId(userId);
+      quantity = Number(quantity) || 1;
 
     if (!order) {
       order = await this.createOrder(userId);
@@ -21,7 +22,7 @@ class OrderService {
       throw new Error(`Product with ID ${productId} not found`);
     }
 
-    await productOrderService.addQuantity(order.id, productId);
+    await productOrderService.addQuantity(order.id, productId, quantity);
     await this.calculateTotalPrice(order.id);
 
     await order.reload();

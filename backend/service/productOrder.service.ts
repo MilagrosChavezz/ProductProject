@@ -11,20 +11,20 @@ class ProductOrderService {
     });
   }
 
-  async addQuantity(orderId: number, productId: number) {
+  async addQuantity(orderId: number, productId: number, quantityToAdd: number = 1) {
+     console.log(`🧮 addQuantity: orderId=${orderId}, productId=${productId}, quantityToAdd=${quantityToAdd}`);
     let productOrder = await this.findProductOrder(orderId, productId);
 
     if (productOrder) {
-      productOrder.quantity += 1;
+      productOrder.quantity += quantityToAdd;
       await productOrder.save();
     } else {
       productOrder = await ProductOrder.create({
         orderId,
         productId,
-        quantity: 1,
+        quantity: quantityToAdd,
       });
     }
-
     return productOrder;
   }
 }

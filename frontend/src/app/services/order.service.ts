@@ -30,8 +30,8 @@ if (token) {
     });
   }
 
-    addProductToCart(product: Product) {
-    return this.http.post(`${this.url}/add`,{ productId: product.id }, {
+    addProductToCart(productId: number, quantity: number) {
+    return this.http.post(`${this.url}/add`,{ productId, quantity }, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

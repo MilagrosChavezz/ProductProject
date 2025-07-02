@@ -15,7 +15,10 @@
                 <p class="card-text text-muted">{{ product()?.description }}</p>
               </div>
               <div>
-                <h4 class="color-price">$ {{ product()?.price }}</h4>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="color-price mb-0">$ {{ product()?.price }}</h4>
+                    <input type="number" min="1"  (input)="onQuantityChange($event)" class="form-control ms-3" style="width: 120px;" placeholder="Quantity"/>
+                </div>
 
                 <div class="d-grid gap-2 mt-2">
                   <button class="btn btn-warning mt-auto" (click)="AddToCart()">
