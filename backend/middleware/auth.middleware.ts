@@ -1,9 +1,9 @@
-import debug from 'debug';
-import dotenv from 'dotenv';
+import debug from "debug";
+import dotenv from "dotenv";
 dotenv.config();
 
-import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import { Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken";
 
 const SECRET_KEY = process.env.SECRET_KEY!;
 
@@ -13,9 +13,7 @@ interface JwtPayload {
   role: string;
   iat: number;
   exp: number;
-  
 }
-
 
 declare global {
   namespace Express {
@@ -25,35 +23,37 @@ declare global {
   }
 }
 
-export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
+export const authenticateToken = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const authHeader = req.headers.authorization;
-console.log('Auth header:', authHeader);
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return void res.status(401).json({ message: 'No token found' });
+  console.log("Auth header:", authHeader);
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return void res.status(401).json({ message: "No token found" });
   }
 
-  const token = authHeader.split(' ')[1];
+  const token = authHeader.split(" ")[1];
 
   try {
     const decoded = jwt.verify(token, SECRET_KEY) as JwtPayload;
     req.user = decoded;
     next();
   } catch (error) {
-    return void res.status(403).json({ message: 'expired token' });
+    return void res.status(403).json({ message: "expired token" });
   }
 };
 export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
-  console.log('User in request:', req.user);
-  if (req.user && req.user.role === 'admin') {
+  console.log("User in request:", req.user);
+  if (req.user && req.user.role === "admin") {
     next();
   } else {
-    return void res.status(403).json({ 
-      message: 'Access denied. Admins only.middle',
-      debug: { user: req.user }
+    return void res.status(403).json({
+      message: "Access denied. Admins only.",
+      debug: { user: req.user },
     });
-  
-
   }
-}
+};
 
 module.exports = { authenticateToken, isAdmin };

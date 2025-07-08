@@ -2,7 +2,8 @@ import { ProductOrder } from "../models/product_order";
 
 class ProductOrderService {
   
-  async findProductOrder(orderId: number, productId: number) {
+
+  async findProductOrder(orderId: number, productId: number): Promise<ProductOrder | null> {
     return await ProductOrder.findOne({
       where: {
         orderId,
@@ -11,7 +12,8 @@ class ProductOrderService {
     });
   }
 
-  async addQuantity(orderId: number, productId: number, quantityToAdd: number = 1) {
+
+  async addQuantity(orderId: number, productId: number, quantityToAdd: number = 1): Promise<ProductOrder> {
     
     let productOrder = await this.findProductOrder(orderId, productId);
 
