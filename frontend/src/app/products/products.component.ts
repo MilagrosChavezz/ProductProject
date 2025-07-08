@@ -50,6 +50,7 @@ export class ProductsComponent implements OnInit {
   clearFilters() {
     this.searchTerm = '';
     this.priceOrder = '';
+    this.selectedCategory = '';
     this.productService.clearFilter();
     this.onFilterChange();
   }
