@@ -1,51 +1,59 @@
-<div class="row g-3 mb-3">
-  <div class="col-12 col-md-8">
-    <div class="input-group shadow-sm">
-      <input
-        type="text"
-        class="form-control border-end-0"
-        placeholder="Search..."
-        [(ngModel)]="searchTerm"
-        (input)="onFilterChange()"
-        aria-label="Search products"
-      />
+<div class="row g-3 align-items-center mb-3">
+  
+  <div class="col-12 col-md-5">
+    <input
+      type="text"
+      class="form-control shadow-sm"
+      placeholder="Search..."
+      [(ngModel)]="searchTerm"
+      (input)="onFilterChange()"
+      aria-label="Search products"
+    />
+  </div>
+
+  
+  <div class="col-12 col-md-3">
+    <label for="category" class="form-label fw-semibold visually-hidden">Filter by Category:</label>
+    <select
+      id="category"
+      class="form-select shadow-sm"
+      [(ngModel)]="selectedCategory"
+      (change)="onFilterChange()"
+    >
+      <option value="">All</option>
+      <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+    </select>
+  </div>
+
+  
+  <div class="col-12 col-md-4 d-flex align-items-center">
+    <select
+      class="form-select shadow-sm me-2"
+      [(ngModel)]="priceOrder"
+      (change)="onFilterChange()"
+      aria-label="Sort by price"
+    >
+      <option value="">Sort by price</option>
+      <option value="asc">Price: Low to High</option>
+      <option value="desc">Price: High to Low</option>
+    </select>
+
+    <button class="btn btn-outline-danger" (click)="clearFilters()" aria-label="Clear filters">
+      <i class="fas fa-times me-1"></i> Clear
+    </button>
+  </div>
+
+ 
+  <div *ngIf="noResults" class="col-12">
+    <div class="alert alert-warning mb-0" role="alert">
+      No products found for this filter.
     </div>
   </div>
-  <label for="category">Filter by Category:</label>
-  <select
-    id="category"
-    [(ngModel)]="selectedCategory"
-    (change)="onFilterChange()"
-  >
-    <option value="">All</option>
-    <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
-  </select>
 
-  <div class="col-12 col-md-4">
-    <div class="input-group shadow-sm">
-      <select
-        class="form-select"
-        [(ngModel)]="priceOrder"
-        (change)="onFilterChange()"
-      >
-        <option value="">Sort by price</option>
-        <option value="asc">Price: Low to High</option>
-        <option value="desc">Price: High to Low</option>
-      </select>
-
-      <button class="btn btn-outline-danger" (click)="clearFilters()">
-        <i class="fas fa-times me-1"></i>Clean
-      </button>
-    </div>
-  </div>
-
-  <div *ngIf="noResults" class="alert alert-warning">
-    No products found for this filter.
-  </div>
-
-  <div class="products-list" role="list" aria-label="Product listing">
+  
+  <div class="col-12 products-list" role="list" aria-label="Product listing">
     @for(item of products(); track item.id){
-    <app-product-card [product]="item" role="listitem"></app-product-card>
+      <app-product-card [product]="item" role="listitem"></app-product-card>
     }
   </div>
 </div>
