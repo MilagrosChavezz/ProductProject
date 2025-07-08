@@ -20,23 +20,22 @@ export class ProductFormComponent {
   selectedFile: File | null = null;
   constructor(private productService: ProductService, private router: Router) {}
 
-productForm = new FormGroup({
-  name: new FormControl<string>('', {
-    nonNullable: true,
-    validators: [Validators.required, Validators.minLength(2)],
-  }),
-  description: new FormControl<string | null>('', {
-    validators: [Validators.required, Validators.minLength(10)],
-  }),
-  price: new FormControl<number>(0, {
-    nonNullable: true,
-    validators: [Validators.required, Validators.min(0.01)],
-  }),
-  category: new FormControl<string | null>('', {
-    validators: [Validators.required],
-  }),
-});
-
+  productForm = new FormGroup({
+    name: new FormControl<string>('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.minLength(2)],
+    }),
+    description: new FormControl<string | null>('', {
+      validators: [Validators.required, Validators.minLength(10)],
+    }),
+    price: new FormControl<number>(0, {
+      nonNullable: true,
+      validators: [Validators.required, Validators.min(0.01)],
+    }),
+    category: new FormControl<string | null>('', {
+      validators: [Validators.required],
+    }),
+  });
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;

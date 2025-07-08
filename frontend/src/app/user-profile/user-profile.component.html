@@ -3,21 +3,28 @@
     <div class="card-body text-center">
       <h3 class="card-title mb-4">User Profile</h3>
 
-      <!-- Avatar principal -->
       <div class="mb-4">
-        <img [src]="selectedAvatar" class="rounded-circle img-fluid" style="width: 150px; height: 150px;" />
+        <img
+          [src]="selectedAvatar"
+          class="rounded-circle img-fluid"
+          style="width: 150px; height: 150px"
+        />
       </div>
 
-     
-
-    
       <div class="row mt-4">
-        <div class="col-md-6 mb-3"><strong>Name:</strong> {{ user.firstName }}</div>
-        <div class="col-md-6 mb-3"><strong>Last name:</strong> {{ user.lastName }}</div>
-        <div class="col-md-6 mb-3"><strong>Email:</strong> {{ user.email }}</div>
-        <div class="col-md-6 mb-3"><strong>Address:</strong> {{ user.address }}</div>
+        <div class="col-md-6 mb-3">
+          <strong>Name:</strong> {{ user.firstName }}
+        </div>
+        <div class="col-md-6 mb-3">
+          <strong>Last name:</strong> {{ user.lastName }}
+        </div>
+        <div class="col-md-6 mb-3">
+          <strong>Email:</strong> {{ user.email }}
+        </div>
+        <div class="col-md-6 mb-3">
+          <strong>Address:</strong> {{ user.address }}
+        </div>
       </div>
     </div>
   </div>
 </div>
-

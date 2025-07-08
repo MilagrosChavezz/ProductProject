@@ -1,5 +1,3 @@
-
-
 <div *ngIf="orderItems().length > 0" class="container mt-4">
   <h2>Your Cart</h2>
   <table class="table table-striped table-bordered">
@@ -13,15 +11,19 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of orderItems()">
-        <td> <a [routerLink]="['/products', item.id]" class="product-link">{{ item.name }}</a></td>
-        <td>{{ item.price | currency:'USD' }}</td>
+        <td>
+          <a [routerLink]="['/products', item.id]" class="product-link">{{
+            item.name
+          }}</a>
+        </td>
+        <td>{{ item.price | currency : "USD" }}</td>
         <td>{{ item.quantity }}</td>
-        <td>{{ (item.price * item.quantity) | currency:'USD' }}</td>
+        <td>{{ item.price * item.quantity | currency : "USD" }}</td>
       </tr>
     </tbody>
   </table>
   <div class="d-flex justify-content-end">
-    <h4>Total: {{ total() | currency:'USD' }}</h4>
+    <h4>Total: {{ total() | currency : "USD" }}</h4>
   </div>
 </div>
 

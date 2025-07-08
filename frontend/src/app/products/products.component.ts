@@ -36,17 +36,16 @@ export class ProductsComponent implements OnInit {
       });
     }
   }
-loadCategories(): void {
-  this.productService.getCategories().subscribe({
-    next: (data) => {
-      this.categories = data;
-    },
-    error: (err) => {
-      console.error('Error loading categories', err);
-    }
-  });
-}
-
+  loadCategories(): void {
+    this.productService.getCategories().subscribe({
+      next: (data) => {
+        this.categories = data;
+      },
+      error: (err) => {
+        console.error('Error loading categories', err);
+      },
+    });
+  }
 
   clearFilters() {
     this.searchTerm = '';

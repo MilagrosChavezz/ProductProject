@@ -1,4 +1,3 @@
-import debug from "debug";
 import dotenv from "dotenv";
 dotenv.config();
 

@@ -26,16 +26,16 @@ app.use('/api/uploads', express.static('uploads'));
 
 db.sequelize.authenticate()
   .then(() => {
-    console.log('✅ Conectado a la base de datos');
+    console.log('✅ Connected to the database successfully.');
     return db.sequelize.sync();
   })
   .then(async () => {
     await initializeDefaults();
     app.listen(PORT, () => {
       
-      console.log(`Servidor escuchando en puerto ${PORT}`);
+      console.log(`Server listening to port: ${PORT}`);
     });
   })
   .catch((err: Error) => {
-    console.error('❌ No se pudo conectar a la base de datos:', err.message);
+    console.error('❌ Connection error:', err.message);
   });

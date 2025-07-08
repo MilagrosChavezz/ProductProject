@@ -20,7 +20,7 @@ function getOrderParam(param: unknown): "asc" | "desc" | undefined {
   return undefined;
 }
 
-export const getCategories = async (req: Request, res: Response) => {
+ const getCategories = async (req: Request, res: Response) => {
   try {
     const categories = await productService.getAllCategories();
 
@@ -30,7 +30,7 @@ export const getCategories = async (req: Request, res: Response) => {
   }
 };
 
-export const filterProducts = async (req: Request, res: Response) => {
+ const filterProducts = async (req: Request, res: Response) => {
   try {
     const filters: ProductFilters = {
       search: getStringParam(req.query.search),
@@ -46,7 +46,7 @@ export const filterProducts = async (req: Request, res: Response) => {
   }
 };
 
-export const addNewProduct = async (req: MulterRequest, res: Response) => {
+ const addNewProduct = async (req: MulterRequest, res: Response) => {
   try {
     const { name, description, price, category } = req.body;
     const priceNumber = Number(price);
@@ -78,7 +78,7 @@ export const addNewProduct = async (req: MulterRequest, res: Response) => {
   }
 };
 
-export const listProducts = async (req: Request, res: Response) => {
+ const listProducts = async (req: Request, res: Response) => {
   try {
     const products = await productService.getAllProducts();
     res.status(200).json(products);
@@ -88,7 +88,7 @@ export const listProducts = async (req: Request, res: Response) => {
   }
 };
 
-export const getProductDetails = async (req: Request, res: Response) => {
+ const getProductDetails = async (req: Request, res: Response) => {
   const { id } = req.params;
   const idNumber = Number(id);
 
@@ -109,4 +109,4 @@ export const getProductDetails = async (req: Request, res: Response) => {
   }
 };
 
-export default { addNewProduct, listProducts, getProductDetails };
+export default { addNewProduct, listProducts, getProductDetails,filterProducts, getCategories };

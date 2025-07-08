@@ -7,12 +7,12 @@
         type="text"
         class="form-control"
         formControlName="name"
-        [class.is-invalid]="productForm.get('name')?.invalid && productForm.get('name')?.touched"
+        [class.is-invalid]="
+          productForm.get('name')?.invalid && productForm.get('name')?.touched
+        "
         placeholder="Enter product name"
       />
-      <div class="invalid-feedback">
-        Name is required.
-      </div>
+      <div class="invalid-feedback">Name is required.</div>
     </div>
 
     <div class="mb-3">
@@ -35,7 +35,9 @@
         formControlName="price"
         min="0"
         step="0.01"
-        [class.is-invalid]="productForm.get('price')?.invalid && productForm.get('price')?.touched"
+        [class.is-invalid]="
+          productForm.get('price')?.invalid && productForm.get('price')?.touched
+        "
         placeholder="Enter price"
       />
       <div class="invalid-feedback">
@@ -44,15 +46,15 @@
     </div>
 
     <div class="mb-3">
-    <label for="image" class="form-label">Upload Image</label>
-    <input
-      class="form-control"
-      type="file"
-      id="image"
-      (change)="onFileSelected($event)"
-      accept="image/*"
-    />
-  </div>
+      <label for="image" class="form-label">Upload Image</label>
+      <input
+        class="form-control"
+        type="file"
+        id="image"
+        (change)="onFileSelected($event)"
+        accept="image/*"
+      />
+    </div>
 
     <div class="mb-3">
       <label for="category" class="form-label">Category</label>
@@ -65,7 +67,11 @@
       />
     </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="productForm.invalid"
+    >
       Save Product
     </button>
   </form>

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { UserSignup } from '../../models/userSingup.model';
 import {
-  Form,
   FormControl,
   FormGroup,
   ReactiveFormsModule,

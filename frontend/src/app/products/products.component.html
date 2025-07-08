@@ -1,5 +1,4 @@
 <div class="row g-3 align-items-center mb-3">
-  
   <div class="col-12 col-md-5">
     <input
       type="text"
@@ -11,9 +10,10 @@
     />
   </div>
 
-  
   <div class="col-12 col-md-3">
-    <label for="category" class="form-label fw-semibold visually-hidden">Filter by Category:</label>
+    <label for="category" class="form-label fw-semibold visually-hidden"
+      >Filter by Category:</label
+    >
     <select
       id="category"
       class="form-select shadow-sm"
@@ -25,7 +25,6 @@
     </select>
   </div>
 
-  
   <div class="col-12 col-md-4 d-flex align-items-center">
     <select
       class="form-select shadow-sm me-2"
@@ -38,22 +37,24 @@
       <option value="desc">Price: High to Low</option>
     </select>
 
-    <button class="btn btn-outline-danger" (click)="clearFilters()" aria-label="Clear filters">
+    <button
+      class="btn btn-outline-danger"
+      (click)="clearFilters()"
+      aria-label="Clear filters"
+    >
       <i class="fas fa-times me-1"></i> Clear
     </button>
   </div>
 
- 
   <div *ngIf="noResults" class="col-12">
     <div class="alert alert-warning mb-0" role="alert">
       No products found for this filter.
     </div>
   </div>
 
-  
   <div class="col-12 products-list" role="list" aria-label="Product listing">
     @for(item of products(); track item.id){
-      <app-product-card [product]="item" role="listitem"></app-product-card>
+    <app-product-card [product]="item" role="listitem"></app-product-card>
     }
   </div>
 </div>
