@@ -12,7 +12,7 @@ class ProductOrderService {
   }
 
   async addQuantity(orderId: number, productId: number, quantityToAdd: number = 1) {
-     console.log(`🧮 addQuantity: orderId=${orderId}, productId=${productId}, quantityToAdd=${quantityToAdd}`);
+    
     let productOrder = await this.findProductOrder(orderId, productId);
 
     if (productOrder) {

@@ -16,20 +16,18 @@ import { AuthService } from '../services/auth.service';
 export class HeaderComponent  {
 
   isLoggedIn = signal<boolean>(false); 
+  menuOpen:boolean = false;
 
   constructor(private authService: AuthService,private router:Router) {
     effect(() => {
       this.isLoggedIn.set(this.authService.isLoggedIn())
     });
   }
-  
-  menuOpen = false;
 
-  isAdmin() {
-    console.log('Checking if user is admin');
-    console.log('Admin status:', this.authService.isAdmin());
+  get isAdmin(): boolean {
     return this.authService.isAdmin();
   }
+  
   goToAddProduct() {
     this.router.navigate(['/products/new']);
   }

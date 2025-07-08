@@ -14,6 +14,6 @@ import { TruncateWordsPipe } from '../../pipes/truncate.pipe';
 export class ProductCardComponent {
 
     product = input<Product>();
-    apiUrl = environment.apiUrl;
+    apiUrl:string = environment.apiUrl;
 
 }

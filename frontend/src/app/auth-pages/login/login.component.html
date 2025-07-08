@@ -1,47 +1,54 @@
+<div
+  class="container-fluid min-vh-100 d-flex justify-content-center align-items-center position-relative"
+  style="z-index: 1"
+>
+  <div
+    class="card shadow-lg p-5 rounded-4"
+    style="max-width: 520px; width: 100%; min-height: 580px"
+  >
+    <h2 class="text-center text-primary fw-bold mb-4">Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="mb-4">
+        <label for="email" class="form-label fw-semibold">Email</label>
+        <input
+          type="email"
+          class="form-control form-control-lg rounded-3"
+          id="email"
+          name="email"
+          placeholder="email@example.com"
+          formControlName="email"
+          required
+        />
+      </div>
+      <div class="mb-4">
+        <label for="password" class="form-label fw-semibold">Password</label>
+        <input
+          type="password"
+          class="form-control form-control-lg rounded-3"
+          id="password"
+          name="password"
+          placeholder="password"
+          required
+          formControlName="password"
+          minlength="6"
+        />
+      </div>
 
-
-
-
-
-  <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center position-relative" style="z-index: 1;">
-    <div class="card shadow-lg p-5 rounded-4" style="max-width: 520px; width: 100%; min-height: 580px;">
-      <h2 class="text-center text-primary fw-bold mb-4">Login</h2>
-      <form [formGroup]="loginForm" (ngSubmit)="OnSubmit()" novalidate>
-        <div class="mb-4">
-          <label for="email" class="form-label fw-semibold">Email</label>
-          <input
-            type="email"
-            class="form-control form-control-lg rounded-3"
-            id="email"
-            name="email"
-            placeholder="email@example.com"
-            formControlName="email"
-            required
-          />
-        </div>
-        <div class="mb-4">
-          <label for="password" class="form-label fw-semibold">Password</label>
-          <input
-            type="password"
-            class="form-control form-control-lg rounded-3"
-            id="password"
-            name="password"
-            placeholder="password"
-            required
-            formControlName="password"
-            minlength="6"
-          />
-        </div>
-
-        <button type="submit"  class="btn btn-primary btn-lg w-100 fw-bold custom-btn mt-5">
-          login
-        </button>
-        <div *ngIf="errorMessage" class="alert alert-danger mt-3">
-  {{ errorMessage }}
-</div>
-        <div class="text-center mt-3">
-          <p class="text-muted">Don't have an account? <a routerLink="/signup" class="text-primary fw-bold">Register</a></p>
-        </div>
-      </form>
-    </div>
+      <button
+        type="submit"
+        class="btn btn-primary btn-lg w-100 fw-bold custom-btn mt-5"
+      >
+        login
+      </button>
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+        {{ errorMessage }}
+      </div>
+      <div class="text-center mt-3">
+        <p class="text-muted">
+          Don't have an account?
+          <a routerLink="/signup" class="text-primary fw-bold">Register</a>
+        </p>
+      </div>
+    </form>
   </div>
+</div>

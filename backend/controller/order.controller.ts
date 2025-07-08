@@ -5,7 +5,7 @@ import OrderService from '../service/order.service';
 
 
 const createOrder = async (req: Request, res: Response) => {
-   console.log('📥 createOrder endpoint hit'); // <-- Agregá esto
+  
   try {
     const userId = req.user!.id;
     const { productId, quantity } = req.body;

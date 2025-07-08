@@ -40,8 +40,8 @@ export const addNewProduct = async (req: Request, res: Response) => {
     const imageFile = (req as any).file;
     const imageUrl = imageFile ? `/uploads/${imageFile.filename}` : null;
 
-    if (!name || !price) {
-      res.status(400).json({ message: 'Name and price are required.' });
+    if (!name || !price || isNaN(price) || price <= 0 || !category || !description) {
+      res.status(400).json({ message: 'All inputs must be completed.' });
       return;
     }
 

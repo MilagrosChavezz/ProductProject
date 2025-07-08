@@ -6,35 +6,39 @@ import { Observable } from 'rxjs/internal/Observable';
 import { OrderCart } from '../models/orderCart.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrderService {
+  url:string = environment.apiUrl + '/orders';
 
+  constructor(private http: HttpClient) {}
 
-  url = environment.apiUrl + '/orders';
-  
-
-  constructor(private http:HttpClient) { }
-
- 
-  getUserCart():Observable<OrderCart> {
-   const token = localStorage.getItem('token');
-if (token) {
-  console.log(JSON.parse(atob(token.split('.')[1])));
+  private getToken(): string | null {
+  return localStorage.getItem('token');
 }
+
+  getUserCart(): Observable<OrderCart> {
+    const token = this.getToken();
+    if (token) {
+      console.log(JSON.parse(atob(token.split('.')[1])));
+    }
 
     return this.http.get<OrderCart>(`${this.url}/cart`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
+        Authorization: `Bearer ${this.getToken()}`,
+      },
     });
   }
 
-    addProductToCart(productId: number, quantity: number) {
-    return this.http.post(`${this.url}/add`,{ productId, quantity }, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
+  addProductToCart(productId: number, quantity: number): Observable<OrderCart> {
+    return this.http.post<OrderCart>(
+      `${this.url}/add`,
+      { productId, quantity },
+      {
+        headers: {
+          Authorization: `Bearer ${this.getToken()}`,
+        },
       }
-    });
+    );
   }
 }

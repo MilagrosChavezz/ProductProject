@@ -8,6 +8,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 @Component({
   selector: 'app-order-cart',
   imports: [CommonModule,RouterLink],
+  standalone: true,
   templateUrl: './order-cart.component.html',
   styleUrl: './order-cart.component.css',
 })
@@ -25,6 +26,7 @@ export class OrderCartComponent implements OnInit {
   loadCart() {
     this.orderService.getUserCart().subscribe({
       next: (order: OrderCart) => {
+
         if (!order || !order.products) {
           this.orderItems.set([]);
           this.total.set(0);
@@ -38,8 +40,7 @@ export class OrderCartComponent implements OnInit {
           quantity: product.ProductOrder?.quantity || 1,
         }));
 
-        
-
+      
         this.orderItems.set(productsMapped);
         this.total.set(order.totalPrice || 0);
       },
