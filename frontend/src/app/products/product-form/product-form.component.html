@@ -23,7 +23,13 @@
         formControlName="description"
         rows="3"
         placeholder="Enter description (optional)"
+        [class.is-invalid]="
+          productForm.get('description')?.invalid && productForm.get('description')?.touched
+        "
       ></textarea>
+      <div class="invalid-feedback">
+        Description should be longer.
+      </div>
     </div>
 
     <div class="mb-3">
