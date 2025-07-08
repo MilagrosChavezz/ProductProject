@@ -7,15 +7,18 @@ export class ProductService {
 
 
   async filterProducts(filters: ProductFilters): Promise<Product[]> {
-    const { search, order } = filters;
+    const { search, order,category } = filters;
     const whereClause: WhereOptions = {};
 
     if (search) {
       (whereClause as any)[Op.or] = [
         { name: { [Op.like]: `%${search}%` } },
-        { description: { [Op.like]: `%${search}%` } },
-        { category: { [Op.like]: `%${search}%` } },
+        { description: { [Op.like]: `%${search}%` } }
       ];
+    }
+
+    if (category) {
+      (whereClause as any).category = category;
     }
 
     const orderClause: [string, 'ASC' | 'DESC'][] = [];
@@ -26,10 +29,24 @@ export class ProductService {
 
     return await Product.findAll({
       where: whereClause,
-      order: orderClause,
+      order: orderClause
     });
   }
 
+ async getAllCategories(): Promise<string[]> {
+  try {
+    const products = await Product.findAll({
+      attributes: ['category'],
+      group: 'category',
+    });
+    return products
+      .map(product => product.category)
+      .filter((category): category is string => typeof category === 'string');
+  } catch (error) {
+    console.error("❌ Sequelize error in getAllCategories:", error);
+    throw error;
+  }
+}
   
   async getAllProducts(): Promise<Product[]> {
     try {

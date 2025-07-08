@@ -22,15 +22,23 @@ export class ProductService {
     return this.http.post<Product>(this.url + '/new', formData, { headers });
   }
 
+  getCategories(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.url}/categories`);
+  }
+  
   searchProducts(filters: {
     search?: string;
     priceOrder?: string;
+    category?: string;
   }): Observable<Product[]> {
     localStorage.setItem('productFilters', JSON.stringify(filters));
     let params = new HttpParams();
 
     if (filters.search) {
       params = params.set('search', filters.search);
+    }
+    if (filters.category) {
+      params = params.set('category', filters.category);
     }
     if (filters.priceOrder) params = params.set('order', filters.priceOrder);
 

@@ -20,11 +20,22 @@ function getOrderParam(param: unknown): "asc" | "desc" | undefined {
   return undefined;
 }
 
+export const getCategories = async (req: Request, res: Response) => {
+  try {
+    const categories = await productService.getAllCategories();
+
+    res.json(categories);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching categories' });
+  }
+};
+
 export const filterProducts = async (req: Request, res: Response) => {
   try {
     const filters: ProductFilters = {
       search: getStringParam(req.query.search),
       order: getOrderParam(req.query.order),
+      category: getStringParam(req.query.category)
     };
 
     const products = await productService.filterProducts(filters);

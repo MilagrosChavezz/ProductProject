@@ -15,6 +15,8 @@ router.post(
   uploadSingleImage,
   ProductController.addNewProduct
 );
+router.get("/categories", ProductController.getCategories);
 router.get("/:id", ProductController.getProductDetails);
+
 
 export default router;

@@ -16,15 +16,19 @@ export class ProductsComponent implements OnInit {
   searchTerm: string = '';
   noResults: boolean = false;
   priceOrder: string = '';
+  categories: string[] = [];
+  selectedCategory: string = '';
 
   constructor(private productService: ProductService) {}
 
   ngOnInit() {
+    this.loadCategories();
     const savedFilters = this.productService.getFilters();
     if (savedFilters) {
       const filters = JSON.parse(savedFilters);
       this.searchTerm = filters.search || '';
       this.priceOrder = filters.priceOrder || '';
+      this.selectedCategory = filters.category || '';
       this.onFilterChange();
     } else {
       this.productService.getProducts().subscribe((data: Product[]) => {
@@ -32,6 +36,17 @@ export class ProductsComponent implements OnInit {
       });
     }
   }
+loadCategories(): void {
+  this.productService.getCategories().subscribe({
+    next: (data) => {
+      this.categories = data;
+    },
+    error: (err) => {
+      console.error('Error loading categories', err);
+    }
+  });
+}
+
 
   clearFilters() {
     this.searchTerm = '';
@@ -44,6 +59,7 @@ export class ProductsComponent implements OnInit {
     const filters = {
       search: this.searchTerm,
       priceOrder: this.priceOrder,
+      category: this.selectedCategory || undefined,
     };
 
     this.productService.searchProducts(filters).subscribe({
